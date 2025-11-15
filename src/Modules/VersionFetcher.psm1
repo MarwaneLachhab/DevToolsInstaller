@@ -43,8 +43,8 @@ function Get-LatestPythonVersion {
 
 function Get-LatestVSCodeVersion {
     try {
-        $response = Invoke-RestMethod -Uri "https://api.github.com/repos/microsoft/vscode/releases/latest" -UseBasicParsing
-        $version = $response.tag_name
+        $response = Invoke-RestMethod -Uri "https://update.code.visualstudio.com/api/update/win32-x64/stable/latest" -UseBasicParsing
+        $version = if ($response.productVersion) { $response.productVersion } else { $response.name }
         return @{
             Version = $version
             Url = "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-user"
@@ -60,9 +60,11 @@ function Get-LatestVSCodeVersion {
 
 function Get-LatestComposerVersion {
     try {
-        $response = Invoke-RestMethod -Uri "https://api.github.com/repos/composer/composer/releases/latest" -UseBasicParsing
+        $response = Invoke-RestMethod -Uri "https://getcomposer.org/versions" -UseBasicParsing
+        $stable = $response.stable | Select-Object -First 1
+        $version = if ($stable.version) { $stable.version } else { "latest" }
         return @{
-            Version = $response.tag_name
+            Version = $version
             Url = "https://getcomposer.org/Composer-Setup.exe"
         }
     } catch {

@@ -1,4 +1,4 @@
-# LAUNCH.ps1
+﻿# LAUNCH.ps1
 # Quick launcher for DevToolsInstaller V2 with automatic admin elevation
 
 # Ensure UTF-8 output so the console banner renders correctly

@@ -62,7 +62,7 @@ DevToolsInstaller/
 - Choose default download directory (handy for portable drives).
 - Toggle auto health scan + update check per install session.
 - Persist Dark/Light theme preference.
-- Settings are stored in `src\user-settings.json`.
+- Settings are stored in `%APPDATA%\DevToolsInstaller\user-settings.json` (and mirrored to `src\user-settings.json` for easy editing).
 
 ## Health Dashboard
 

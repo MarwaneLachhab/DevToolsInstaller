@@ -19,6 +19,7 @@
 $OutputEncoding = [System.Text.Encoding]::UTF8
 
 Add-Type -AssemblyName PresentationFramework
+Add-Type -AssemblyName PresentationCore
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
@@ -48,7 +49,9 @@ if (-not (Test-AdminRights)) {
 $script:selectedTools = @{}
 $script:versionInfo = @{}
 $script:defaultDownloadPath = Join-Path $PSScriptRoot "Downloads"
-$script:settingsPath = Join-Path $PSScriptRoot "user-settings.json"
+$script:legacySettingsPath = Join-Path $PSScriptRoot "user-settings.json"
+$script:settingsDir = Join-Path ([Environment]::GetFolderPath("ApplicationData")) "DevToolsInstaller"
+$script:settingsPath = Join-Path $script:settingsDir "user-settings.json"
 $script:downloadPath = $script:defaultDownloadPath
 $script:userSettings = $null
 $script:isDarkTheme = $true
@@ -58,6 +61,8 @@ $script:lastHealthResults = @()
 $script:lastUpdateResults = @()
 $script:lastHealthRun = $null
 $script:lastUpdateRun = $null
+$script:isSidebarCollapsed = $false
+$script:healthScanWorker = $null
 
 function Ensure-DownloadPath {
     if ([string]::IsNullOrWhiteSpace($script:downloadPath)) {
@@ -142,9 +147,16 @@ function Get-UserSettingValue {
 }
 
 function Load-UserSettings {
+    $settingsSource = $null
     try {
         if (Test-Path $script:settingsPath) {
-            $script:userSettings = Get-Content -Path $script:settingsPath -Raw | ConvertFrom-Json
+            $settingsSource = $script:settingsPath
+        } elseif (Test-Path $script:legacySettingsPath) {
+            $settingsSource = $script:legacySettingsPath
+        }
+
+        if ($settingsSource) {
+            $script:userSettings = Get-Content -Path $settingsSource -Raw | ConvertFrom-Json
         } else {
             $script:userSettings = Get-DefaultUserSettings
         }
@@ -163,6 +175,10 @@ function Load-UserSettings {
     $script:currentTheme = if ($script:isDarkTheme) { "Dark" } else { "Light" }
     
     Ensure-DownloadPath
+
+    if (($settingsSource -eq $script:legacySettingsPath) -and -not (Test-Path $script:settingsPath)) {
+        Save-UserSettings
+    }
 }
 
 function Save-UserSettings {
@@ -170,7 +186,15 @@ function Save-UserSettings {
     
     $script:userSettings.DownloadPath = $script:downloadPath
     try {
-        $script:userSettings | ConvertTo-Json -Depth 5 | Set-Content -Path $script:settingsPath -Encoding UTF8
+        if (-not (Test-Path $script:settingsDir)) {
+            New-Item -Path $script:settingsDir -ItemType Directory -Force | Out-Null
+        }
+        $json = $script:userSettings | ConvertTo-Json -Depth 5
+        $encoding = New-Object System.Text.UTF8Encoding($true)
+        [System.IO.File]::WriteAllText($script:settingsPath, $json, $encoding)
+        if ($script:legacySettingsPath) {
+            [System.IO.File]::WriteAllText($script:legacySettingsPath, $json, $encoding)
+        }
     } catch {
         Write-Warning "Failed to save user settings: $_"
     }
@@ -265,34 +289,34 @@ function Get-VersionFromCommand {
 # Theme colors
 $script:themes = @{
     Dark = @{
-        Background = "#FF1E1E1E"
-        Panel = "#FF252526"
-        Surface = "#FF2D2D30"
-        Sidebar = "#FF1F1F1F"
-        SidebarHover = "#FF2A2A2A"
-        SidebarActive = "#FF007ACC"
+        Background = "#FF0F141B"
+        Panel = "#FF1A222C"
+        Surface = "#FF1F2A37"
+        Sidebar = "#FF131B24"
+        SidebarHover = "#FF1F2733"
+        SidebarActive = "#FF3A86FF"
         Text = "#FFFFFFFF"
-        TextSecondary = "#FFB0B0B0"
-        Accent = "#FF007ACC"
-        AccentHover = "#FF005A9E"
-        Success = "#FF4EC9B0"
-        Warning = "#FFFF9800"
-        Error = "#FFF44747"
+        TextSecondary = "#FF9DB4D0"
+        Accent = "#FF3A86FF"
+        AccentHover = "#FF2F6FD2"
+        Success = "#FF3DD598"
+        Warning = "#FFFFB347"
+        Error = "#FFFF6B81"
     }
     Light = @{
-        Background = "#FFFFFFFF"
-        Panel = "#FFF3F3F3"
-        Surface = "#FFFAFAFA"
-        Sidebar = "#FFE8E8E8"
-        SidebarHover = "#FFD0D0D0"
-        SidebarActive = "#FF0078D4"
-        Text = "#FF000000"
-        TextSecondary = "#FF666666"
-        Accent = "#FF0078D4"
-        AccentHover = "#FF005A9E"
-        Success = "#FF16825D"
-        Warning = "#FFFF8C00"
-        Error = "#FFE81123"
+        Background = "#FFF7F9FC"
+        Panel = "#FFFFFFFF"
+        Surface = "#FFF0F4FA"
+        Sidebar = "#FFE6ECF5"
+        SidebarHover = "#FFD9E3F1"
+        SidebarActive = "#FF2563EB"
+        Text = "#FF0F172A"
+        TextSecondary = "#FF475569"
+        Accent = "#FF2563EB"
+        AccentHover = "#FF1D4ED8"
+        Success = "#FF0F9D58"
+        Warning = "#FFF59E0B"
+        Error = "#FFDC2626"
     }
 }
 
@@ -304,35 +328,45 @@ $xaml = @"
         Height="800" Width="1200"
         WindowStartupLocation="CenterScreen"
         Background="{DynamicResource BgColor}"
-        FontFamily="Segoe UI, Segoe UI Emoji, Segoe UI Symbol">
+        FontFamily="Segoe UI, Segoe UI Emoji, Segoe UI Symbol"
+        SnapsToDevicePixels="True"
+        TextOptions.TextFormattingMode="Ideal">
     
     <Window.Resources>
         <!-- Dynamic Theme Colors -->
-        <SolidColorBrush x:Key="BgColor" Color="#FF1E1E1E"/>
-        <SolidColorBrush x:Key="PanelColor" Color="#FF252526"/>
-        <SolidColorBrush x:Key="SurfaceColor" Color="#FF2D2D30"/>
-        <SolidColorBrush x:Key="SidebarColor" Color="#FF1F1F1F"/>
-        <SolidColorBrush x:Key="SidebarHoverColor" Color="#FF2A2A2A"/>
-        <SolidColorBrush x:Key="SidebarActiveColor" Color="#FF007ACC"/>
+        <SolidColorBrush x:Key="BgColor" Color="#FF0F141B"/>
+        <SolidColorBrush x:Key="PanelColor" Color="#FF1A222C"/>
+        <SolidColorBrush x:Key="SurfaceColor" Color="#FF1F2A37"/>
+        <SolidColorBrush x:Key="SidebarColor" Color="#FF131B24"/>
+        <SolidColorBrush x:Key="SidebarHoverColor" Color="#FF1F2733"/>
+        <SolidColorBrush x:Key="SidebarActiveColor" Color="#FF3A86FF"/>
         <SolidColorBrush x:Key="TextColor" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="TextSecondaryColor" Color="#FFB0B0B0"/>
-        <SolidColorBrush x:Key="AccentColor" Color="#FF007ACC"/>
-        <SolidColorBrush x:Key="AccentHoverColor" Color="#FF005A9E"/>
+        <SolidColorBrush x:Key="TextSecondaryColor" Color="#FF9DB4D0"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#FF3A86FF"/>
+        <SolidColorBrush x:Key="AccentHoverColor" Color="#FF2F6FD2"/>
+        <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF1A222C" Offset="0"/>
+            <GradientStop Color="#FF3A86FF" Offset="1"/>
+        </LinearGradientBrush>
+        <DropShadowEffect x:Key="CardShadow" Color="#AA000000" BlurRadius="18" ShadowDepth="0" Opacity="0.35"/>
         
         <!-- Sidebar Button Style -->
         <Style x:Key="SidebarButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Height" Value="50"/>
+            <Setter Property="Height" Value="48"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
             <Setter Property="Padding" Value="20,0"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0,4"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="0,0,0,0" BorderBrush="{DynamicResource AccentColor}">
+                        <Border x:Name="border"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="14">
                             <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"/>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -355,6 +389,11 @@ $xaml = @"
             <Setter Property="Margin" Value="10"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#80000000" BlurRadius="12" ShadowDepth="1" Opacity="0.35"/>
+                </Setter.Value>
+            </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="{DynamicResource AccentHoverColor}"/>
@@ -398,16 +437,55 @@ $xaml = @"
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="IconButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="44"/>
+            <Setter Property="Height" Value="44"/>
+            <Setter Property="Background" Value="{DynamicResource SurfaceColor}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="iconBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="14">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="iconBorder" Property="Background" Value="{DynamicResource AccentHoverColor}"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     
-    <Grid>
+    <Grid Margin="20">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition x:Name="SidebarColumn" Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
         <!-- Sidebar -->
-        <Border Grid.Column="0" Background="{DynamicResource SidebarColor}">
+        <Border x:Name="sidebarContainer"
+                Grid.Column="0"
+                Width="260"
+                MinWidth="72"
+                Margin="0,0,20,0"
+                Padding="16"
+                Background="{DynamicResource SidebarColor}"
+                CornerRadius="22"
+                Effect="{DynamicResource CardShadow}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -416,16 +494,16 @@ $xaml = @"
                 </Grid.RowDefinitions>
                 
                 <!-- Logo/Title -->
-                <StackPanel Grid.Row="0">
-                    <TextBlock FontSize="18" FontWeight="Bold" 
+                <StackPanel x:Name="sidebarBranding" Grid.Row="0" Margin="0,0,0,8">
+                    <TextBlock FontSize="20" FontWeight="Bold" 
                               Foreground="{DynamicResource TextColor}" 
-                              Margin="20,20,20,10" HorizontalAlignment="Center">
+                              Margin="0,6,0,4" HorizontalAlignment="Left">
                         <Run FontFamily="Segoe UI Emoji" Text="🚀 "/>
-                        <Run Text="Dev Tools"/>
+                        <Run Text="Dev Tools Hub"/>
                     </TextBlock>
-                    <TextBlock Text="by SPARO" FontSize="10" 
+                    <TextBlock Text="crafted by SPARO" FontSize="12" 
                               Foreground="{DynamicResource TextSecondaryColor}"
-                              Margin="20,0,20,30" HorizontalAlignment="Center"/>
+                              Margin="0,0,0,12"/>
                 </StackPanel>
                 
                 <!-- Navigation Buttons -->
@@ -433,78 +511,71 @@ $xaml = @"
                     <Button x:Name="btnNavTools" Style="{StaticResource SidebarButtonStyle}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                                     TextElement.Foreground="{DynamicResource TextColor}">
-                            <TextBlock Text="📦" FontFamily="Segoe UI Emoji" Margin="0,0,8,0"/>
-                            <TextBlock Text="Install Tools"/>
+                            <TextBlock Text="📦" FontFamily="Segoe UI Emoji" Margin="0"/>
+                            <TextBlock x:Name="lblNavTools" Text="Install Tools" Margin="8,0,0,0"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="btnNavProfiles" Style="{StaticResource SidebarButtonStyle}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                                     TextElement.Foreground="{DynamicResource TextColor}">
-                            <TextBlock Text="⭐" FontFamily="Segoe UI Emoji" Margin="0,0,8,0"/>
-                            <TextBlock Text="Profiles"/>
+                            <TextBlock Text="⭐" FontFamily="Segoe UI Emoji" Margin="0"/>
+                            <TextBlock x:Name="lblNavProfiles" Text="Profiles" Margin="8,0,0,0"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="btnNavExtensions" Style="{StaticResource SidebarButtonStyle}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                                     TextElement.Foreground="{DynamicResource TextColor}">
-                            <TextBlock Text="🧩" FontFamily="Segoe UI Emoji" Margin="0,0,8,0"/>
-                            <TextBlock Text="VS Code Ext"/>
+                            <TextBlock Text="🧩" FontFamily="Segoe UI Emoji" Margin="0"/>
+                            <TextBlock x:Name="lblNavExtensions" Text="VS Code Ext" Margin="8,0,0,0"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="btnNavHealth" Style="{StaticResource SidebarButtonStyle}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                                     TextElement.Foreground="{DynamicResource TextColor}">
-                            <TextBlock Text="🏥" FontFamily="Segoe UI Emoji" Margin="0,0,8,0"/>
-                            <TextBlock Text="Health Check"/>
+                            <TextBlock Text="🏥" FontFamily="Segoe UI Emoji" Margin="0"/>
+                            <TextBlock x:Name="lblNavHealth" Text="Health Check" Margin="8,0,0,0"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="btnNavUpdate" Style="{StaticResource SidebarButtonStyle}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                                     TextElement.Foreground="{DynamicResource TextColor}">
-                            <TextBlock Text="🔄" FontFamily="Segoe UI Emoji" Margin="0,0,8,0"/>
-                            <TextBlock Text="Updates"/>
+                            <TextBlock Text="🔄" FontFamily="Segoe UI Emoji" Margin="0"/>
+                            <TextBlock x:Name="lblNavUpdate" Text="Updates" Margin="8,0,0,0"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="btnNavSettings" Style="{StaticResource SidebarButtonStyle}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                                     TextElement.Foreground="{DynamicResource TextColor}">
-                            <TextBlock Text="⚙️" FontFamily="Segoe UI Emoji" Margin="0,0,8,0"/>
-                            <TextBlock Text="Settings"/>
+                            <TextBlock Text="⚙️" FontFamily="Segoe UI Emoji" Margin="0"/>
+                            <TextBlock x:Name="lblNavSettings" Text="Settings" Margin="8,0,0,0"/>
                         </StackPanel>
                     </Button>
                     <Button x:Name="btnNavAbout" Style="{StaticResource SidebarButtonStyle}">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center"
                                     TextElement.Foreground="{DynamicResource TextColor}">
-                            <TextBlock Text="ℹ️" FontFamily="Segoe UI Emoji" Margin="0,0,8,0"/>
-                            <TextBlock Text="About"/>
+                            <TextBlock Text="ℹ️" FontFamily="Segoe UI Emoji" Margin="0"/>
+                            <TextBlock x:Name="lblNavAbout" Text="About" Margin="8,0,0,0"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
                 
                 <!-- Theme Toggle (Bottom) -->
-                <Border Grid.Row="2" Background="{DynamicResource SurfaceColor}" Margin="15" CornerRadius="10" Padding="15">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <StackPanel>
-                            <TextBlock Text="Theme" FontSize="13" FontWeight="SemiBold"
-                                      Foreground="{DynamicResource TextColor}"/>
-                            <TextBlock FontSize="12" Foreground="{DynamicResource TextSecondaryColor}"
-                                      Margin="0,5,0,0">
-                                <Run x:Name="runThemeStatusIcon" FontFamily="Segoe UI Emoji" Text="🌙"/>
-                                <Run x:Name="runThemeStatusText" Text=" Dark Mode"/>
-                            </TextBlock>
+                <Border x:Name="themeCard" Grid.Row="2" Background="{DynamicResource SurfaceColor}" CornerRadius="16" Padding="15" Margin="0,16,0,0">
+                    <StackPanel x:Name="themeLayout" Orientation="Vertical" HorizontalAlignment="Stretch">
+                        <TextBlock x:Name="txtThemeLabel" Text="Theme" FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextColor}" HorizontalAlignment="Center"/>
+                        <StackPanel x:Name="themeSwitchPanel" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Center">
+                            <ToggleButton x:Name="btnThemeToggle"
+                                          Style="{StaticResource ToggleSwitchStyle}"
+                                          Background="{DynamicResource SidebarHoverColor}"
+                                          IsChecked="True"
+                                          Margin="0,0,12,0"/>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock x:Name="runThemeStatusIcon" FontFamily="Segoe UI Emoji" Text="🌙" Margin="0,0,6,0"/>
+                                <TextBlock x:Name="runThemeStatusText" Text=" Dark Mode" Foreground="{DynamicResource TextSecondaryColor}" FontSize="12"/>
+                            </StackPanel>
                         </StackPanel>
-                        
-                        <ToggleButton x:Name="btnThemeToggle"
-                                      Grid.Column="1"
-                                      Style="{StaticResource ToggleSwitchStyle}"
-                                      Background="{DynamicResource SidebarHoverColor}"
-                                      IsChecked="True"/>
-                    </Grid>
+                    </StackPanel>
                 </Border>
             </Grid>
         </Border>
@@ -519,37 +590,49 @@ $xaml = @"
             </Grid.RowDefinitions>
             
             <!-- Header -->
-            <Border Grid.Row="0" Background="{DynamicResource PanelColor}" Padding="20">
+            <Border Grid.Row="0" Background="{DynamicResource HeaderGradient}" Padding="20" CornerRadius="20" Margin="0,0,0,16" Effect="{DynamicResource CardShadow}">
                 <Grid>
-                    <TextBlock x:Name="txtPageTitle" Text="Install Development Tools" 
-                              FontSize="24" FontWeight="Bold" 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnSidebarToggle" Grid.Column="0" Style="{StaticResource IconButtonStyle}" Content="⟨" Margin="0,0,16,0"/>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock x:Name="txtPageTitle" Text="Install Development Tools" 
+                              FontSize="26" FontWeight="Bold" 
                               Foreground="{DynamicResource TextColor}"/>
-                    <TextBlock x:Name="txtPageSubtitle" Text="Select tools to install automatically" 
-                              FontSize="12" Foreground="{DynamicResource TextSecondaryColor}"
-                              Margin="0,35,0,0"/>
+                        <TextBlock x:Name="txtPageSubtitle" Text="Select tools to install automatically" 
+                              FontSize="13" Foreground="{DynamicResource TextSecondaryColor}"
+                              Margin="0,6,0,0"/>
+                    </StackPanel>
                 </Grid>
             </Border>
             
             <!-- Fixed Action Bar (Top Buttons) -->
             <Border Grid.Row="1" x:Name="actionBar" Background="{DynamicResource PanelColor}" 
-                    Padding="20,15" BorderThickness="0,1,0,1" 
-                    BorderBrush="{DynamicResource SidebarActiveColor}" Visibility="Collapsed">
+                    Padding="18,14"
+                    CornerRadius="18"
+                    Margin="0,0,0,16"
+                    Effect="{DynamicResource CardShadow}"
+                    Visibility="Collapsed">
                 <StackPanel x:Name="actionBarContent" Orientation="Horizontal" HorizontalAlignment="Center">
                     <!-- Buttons loaded dynamically per page -->
                 </StackPanel>
             </Border>
             
             <!-- Main Content (MultiPage) -->
-            <ScrollViewer Grid.Row="2" x:Name="mainContent" VerticalScrollBarVisibility="Auto">
-                <!-- Content loaded dynamically -->
-            </ScrollViewer>
+            <Border Grid.Row="2" Background="{DynamicResource PanelColor}" CornerRadius="22" Padding="10" Effect="{DynamicResource CardShadow}">
+                <ScrollViewer x:Name="mainContent" VerticalScrollBarVisibility="Auto" Margin="0">
+                    <!-- Content loaded dynamically -->
+                </ScrollViewer>
+            </Border>
             
             <!-- Status Bar -->
-            <Border Grid.Row="3" Background="{DynamicResource PanelColor}" Padding="15">
+            <Border Grid.Row="3" Background="{DynamicResource PanelColor}" Padding="15" CornerRadius="18" Margin="0,16,0,0" Effect="{DynamicResource CardShadow}">
                 <StackPanel>
                     <TextBlock x:Name="txtStatus" Foreground="{DynamicResource TextColor}" 
                               FontSize="13" Margin="0,0,0,5" Text="Ready"/>
-                    <ProgressBar x:Name="progressBar" Height="25" Minimum="0" Maximum="100" Value="0"/>
+                    <ProgressBar x:Name="progressBar" Height="22" Minimum="0" Maximum="100" Value="0"/>
                 </StackPanel>
             </Border>
         </Grid>
@@ -563,6 +646,12 @@ $window = [Windows.Markup.XamlReader]::Parse($xaml)
 # Get controls
 $controls = @{
     # Sidebar
+    sidebarContainer = $window.FindName("sidebarContainer")
+    sidebarBranding = $window.FindName("sidebarBranding")
+    themeCard = $window.FindName("themeCard")
+    themeLayout = $window.FindName("themeLayout")
+    themeSwitchPanel = $window.FindName("themeSwitchPanel")
+    themeLabel = $window.FindName("txtThemeLabel")
     btnNavTools = $window.FindName("btnNavTools")
     btnNavProfiles = $window.FindName("btnNavProfiles")
     btnNavExtensions = $window.FindName("btnNavExtensions")
@@ -573,6 +662,14 @@ $controls = @{
     btnThemeToggle = $window.FindName("btnThemeToggle")
     runThemeStatusIcon = $window.FindName("runThemeStatusIcon")
     runThemeStatusText = $window.FindName("runThemeStatusText")
+    btnSidebarToggle = $window.FindName("btnSidebarToggle")
+    lblNavTools = $window.FindName("lblNavTools")
+    lblNavProfiles = $window.FindName("lblNavProfiles")
+    lblNavExtensions = $window.FindName("lblNavExtensions")
+    lblNavHealth = $window.FindName("lblNavHealth")
+    lblNavUpdate = $window.FindName("lblNavUpdate")
+    lblNavSettings = $window.FindName("lblNavSettings")
+    lblNavAbout = $window.FindName("lblNavAbout")
     
     # Header
     txtPageTitle = $window.FindName("txtPageTitle")
@@ -589,6 +686,26 @@ $controls = @{
     txtStatus = $window.FindName("txtStatus")
     progressBar = $window.FindName("progressBar")
 }
+
+$controls.sidebarButtons = @(
+    $controls.btnNavTools,
+    $controls.btnNavProfiles,
+    $controls.btnNavExtensions,
+    $controls.btnNavHealth,
+    $controls.btnNavUpdate,
+    $controls.btnNavSettings,
+    $controls.btnNavAbout
+) | Where-Object { $_ }
+
+$controls.sidebarLabels = @(
+    $controls.lblNavTools,
+    $controls.lblNavProfiles,
+    $controls.lblNavExtensions,
+    $controls.lblNavHealth,
+    $controls.lblNavUpdate,
+    $controls.lblNavSettings,
+    $controls.lblNavAbout
+) | Where-Object { $_ }
 
 # Helper to create SolidColorBrush from #AARRGGBB / #RRGGBB hex
 function New-ThemeBrush {
@@ -629,6 +746,29 @@ function New-ThemeBrush {
     return $brush.CloneCurrentValue()
 }
 
+function New-GradientBrush {
+    param(
+        [string]$StartColor,
+        [string]$EndColor
+    )
+
+    try {
+        $start = [System.Windows.Media.ColorConverter]::ConvertFromString($StartColor)
+        $end = [System.Windows.Media.ColorConverter]::ConvertFromString($EndColor)
+    } catch {
+        $start = [System.Windows.Media.Colors]::Transparent
+        $end = [System.Windows.Media.Colors]::Transparent
+    }
+
+    $brush = New-Object System.Windows.Media.LinearGradientBrush
+    $brush.StartPoint = [System.Windows.Point]::new(0,0)
+    $brush.EndPoint = [System.Windows.Point]::new(1,1)
+    $brush.GradientStops.Add([System.Windows.Media.GradientStop]::new($start, 0))
+    $brush.GradientStops.Add([System.Windows.Media.GradientStop]::new($end, 1))
+    if ($brush.CanFreeze) { $brush.Freeze() }
+    return $brush.CloneCurrentValue()
+}
+
 # Function to apply theme
 function Set-Theme {
     param([bool]$Dark)
@@ -646,17 +786,89 @@ function Set-Theme {
     $window.Resources["TextSecondaryColor"] = New-ThemeBrush $theme.TextSecondary
     $window.Resources["AccentColor"] = New-ThemeBrush $theme.Accent
     $window.Resources["AccentHoverColor"] = New-ThemeBrush $theme.AccentHover
+    $window.Resources["HeaderGradient"] = New-GradientBrush -StartColor $theme.Panel -EndColor $theme.Accent
     
-    if ($controls.btnThemeToggle.IsChecked -ne $Dark) {
+    if ($controls.btnThemeToggle -and $controls.btnThemeToggle.IsChecked -ne $Dark) {
         $controls.btnThemeToggle.IsChecked = $Dark
     }
-    $controls.runThemeStatusIcon.Text = if ($Dark) { "🌙" } else { "☀️" }
-    $controls.runThemeStatusText.Text = if ($Dark) { " Dark Mode" } else { " Light Mode" }
-    
+        if ($controls.runThemeStatusIcon) {
+            $controls.runThemeStatusIcon.Text = if ($Dark) { "🌙" } else { "☀️" }
+        }
+        if ($controls.runThemeStatusText) {
+            $controls.runThemeStatusText.Text = if ($Dark) { " Dark Mode" } else { " Light Mode" }
+        }
     # Reload current page to apply theme to dynamic content
     if ($script:currentPage) {
         Load-Page $script:currentPage
     }
+
+    Update-SidebarVisualState -Collapsed:$script:isSidebarCollapsed
+}
+function Update-SidebarVisualState {
+    param(
+        [bool]$Collapsed,
+        [switch]$Animate
+    )
+
+    $script:isSidebarCollapsed = $Collapsed
+    $targetWidth = if ($Collapsed) { 72 } else { 260 }
+    $labelVisibility = if ($Collapsed) { [System.Windows.Visibility]::Collapsed } else { [System.Windows.Visibility]::Visible }
+
+    if ($controls.sidebarContainer) {
+        $controls.sidebarContainer.BeginAnimation([System.Windows.FrameworkElement]::WidthProperty, $null)
+        if ($Animate) {
+            $animation = New-Object System.Windows.Media.Animation.DoubleAnimation
+            $animation.To = $targetWidth
+            $animation.Duration = [System.Windows.Duration]::new([TimeSpan]::FromMilliseconds(240))
+            $animation.EasingFunction = New-Object System.Windows.Media.Animation.QuadraticEase -Property @{ EasingMode = "EaseInOut" }
+            $controls.sidebarContainer.BeginAnimation([System.Windows.FrameworkElement]::WidthProperty, $animation)
+        } else {
+            $controls.sidebarContainer.Width = $targetWidth
+        }
+    }
+
+    foreach ($label in $controls.sidebarLabels) {
+        if ($label) { $label.Visibility = $labelVisibility }
+    }
+
+    foreach ($element in @($controls.sidebarBranding)) {
+        if ($element) { $element.Visibility = $labelVisibility }
+    }
+    if ($controls.themeCard) {
+        $controls.themeCard.Visibility = [System.Windows.Visibility]::Visible
+        $controls.themeCard.Padding = if ($Collapsed) { "10" } else { "15" }
+        $controls.themeCard.Margin = if ($Collapsed) { "0,8,0,0" } else { "0,16,0,0" }
+    }
+    if ($controls.themeLabel) {
+        $controls.themeLabel.Visibility = if ($Collapsed) { [System.Windows.Visibility]::Collapsed } else { [System.Windows.Visibility]::Visible }
+    }
+    if ($controls.themeLayout) {
+        $controls.themeLayout.HorizontalAlignment = if ($Collapsed) { "Center" } else { "Stretch" }
+        $controls.themeLayout.Margin = if ($Collapsed) { "0" } else { "0" }
+    }
+    if ($controls.themeSwitchPanel) {
+        $controls.themeSwitchPanel.Margin = if ($Collapsed) { "0" } else { "0,10,0,0" }
+        $controls.themeSwitchPanel.HorizontalAlignment = if ($Collapsed) { "Center" } else { "Center" }
+        $controls.themeSwitchPanel.Orientation = "Horizontal"
+    }
+
+    $padding = if ($Collapsed) { "10,0" } else { "20,0" }
+    $contentAlignment = if ($Collapsed) { "Center" } else { "Left" }
+    foreach ($button in $controls.sidebarButtons) {
+        if ($button) {
+            $button.Padding = $padding
+            $button.HorizontalContentAlignment = $contentAlignment
+        }
+    }
+
+    if ($controls.btnSidebarToggle) {
+        $controls.btnSidebarToggle.Content = if ($Collapsed) { "☰" } else { "⟨" }
+        $controls.btnSidebarToggle.ToolTip = if ($Collapsed) { "Expand sidebar" } else { "Collapse sidebar" }
+    }
+}
+
+function Toggle-Sidebar {
+    Update-SidebarVisualState -Collapsed:(-not $script:isSidebarCollapsed) -Animate
 }
 
 function Set-EmojiContent {
@@ -1534,20 +1746,35 @@ function Render-HealthResults {
 function Invoke-HealthCheck {
     param([switch]$Silent)
     
+    if ($Silent) {
+        if ($controls.txtStatus) { $controls.txtStatus.Text = "Running health scan..." }
+        $results = Get-HealthCheckResults -OnProgress {
+            param($component, $position, $total)
+            if ($controls -and $controls.txtStatus) {
+                $controls.txtStatus.Text = "Checking $component ($position/$total)..."
+            }
+        }.GetNewClosure()
+        $script:lastHealthResults = $results
+        $script:lastHealthRun = Get-Date
+        if ($controls.txtStatus) { $controls.txtStatus.Text = "Silent health scan complete." }
+        return $results
+    }
+    
+    if ($script:healthScanWorker -and $script:healthScanWorker.IsBusy) {
+        if ($controls.txtStatus) { $controls.txtStatus.Text = "Health scan already running..." }
+        return
+    }
+    
     $content = $controls.mainContent.Content
     $runButton = if ($content) { $content.FindName("btnRunHealthCheck") } else { $null }
     $exportButton = if ($content) { $content.FindName("btnExportHealthReport") } else { $null }
     
-    if (-not $Silent) {
-        if ($runButton) { $runButton.IsEnabled = $false }
-        if ($exportButton) { $exportButton.IsEnabled = $false }
-    }
+    if ($runButton) { $runButton.IsEnabled = $false }
+    if ($exportButton) { $exportButton.IsEnabled = $false }
     
-    if ($controls.txtStatus) {
-        $controls.txtStatus.Text = if ($Silent) { "Running health scan..." } else { "Initializing health scan..." }
-    }
+    if ($controls.txtStatus) { $controls.txtStatus.Text = "Initializing health scan..." }
     
-    if (-not $Silent -and $content) {
+    if ($content) {
         $txtSummary = $content.FindName("txtHealthSummary")
         if ($txtSummary) { $txtSummary.Text = "Running diagnostics..." }
         $txtIssues = $content.FindName("txtHealthIssues")
@@ -1556,46 +1783,53 @@ function Invoke-HealthCheck {
         if ($txtScore) { $txtScore.Text = "--%" }
     }
     
-    $progressSilent = $Silent.IsPresent
+    $dispatcher = $window.Dispatcher
     $progressCallback = {
         param($component, $position, $total)
-        if ($controls -and $controls.txtStatus) {
-            $controls.txtStatus.Text = "Checking $component ($position/$total)..."
-        }
-        if (-not $progressSilent) {
-            [System.Windows.Forms.Application]::DoEvents()
-        }
+        $dispatcher.Invoke([System.Action]{
+            if ($controls.txtStatus) {
+                $controls.txtStatus.Text = "Checking $component ($position/$total)..."
+            }
+        })
     }.GetNewClosure()
     
-    try {
-        $results = Get-HealthCheckResults -OnProgress $progressCallback
-    } catch {
-        if (-not $Silent) {
+    $worker = New-Object System.ComponentModel.BackgroundWorker
+    $worker.WorkerSupportsCancellation = $false
+    $worker.add_DoWork({
+        param($sender, $args)
+        $args.Result = Get-HealthCheckResults -OnProgress $progressCallback
+    }.GetNewClosure())
+    
+    $worker.add_RunWorkerCompleted({
+        param($sender, $args)
+        $dispatcher.Invoke([System.Action]{
             if ($runButton) { $runButton.IsEnabled = $true }
             if ($exportButton) { $exportButton.IsEnabled = $true }
-        }
-        if ($controls.txtStatus) { $controls.txtStatus.Text = "Health scan failed." }
-        [System.Windows.MessageBox]::Show(
-            "Health scan failed:`n$($_.Exception.Message)",
-            "Health Scan",
-            [System.Windows.MessageBoxButton]::OK,
-            [System.Windows.MessageBoxImage]::Error
-        ) | Out-Null
-        return @()
-    }
-    $script:lastHealthResults = $results
-    $script:lastHealthRun = Get-Date
+            $script:healthScanWorker = $null
+            
+            if ($args.Error) {
+                if ($controls.txtStatus) { $controls.txtStatus.Text = "Health scan failed." }
+                [System.Windows.MessageBox]::Show(
+                    "Health scan failed:`n$($args.Error.Message)",
+                    "Health Scan",
+                    [System.Windows.MessageBoxButton]::OK,
+                    [System.Windows.MessageBoxImage]::Error
+                ) | Out-Null
+                return
+            }
+            
+            $results = if ($args.Result) { $args.Result } else { @() }
+            $script:lastHealthResults = $results
+            $script:lastHealthRun = Get-Date
+            if ($script:currentPage -eq "Health") {
+                Render-HealthResults -Results $results
+            }
+            if ($controls.txtStatus) { $controls.txtStatus.Text = "Health scan complete." }
+        })
+    }.GetNewClosure())
     
-    if (-not $Silent) {
-        Render-HealthResults -Results $results
-        if ($runButton) { $runButton.IsEnabled = $true }
-        if ($exportButton) { $exportButton.IsEnabled = $true }
-        if ($controls.txtStatus) { $controls.txtStatus.Text = "Health scan complete." }
-    } else {
-        if ($controls.txtStatus) { $controls.txtStatus.Text = "Silent health scan complete." }
-    }
-    
-    return $results
+    $script:healthScanWorker = $worker
+    $worker.RunWorkerAsync() | Out-Null
 }
 
 function Export-HealthReport {
@@ -2332,6 +2566,10 @@ $controls.btnThemeToggle.Add_Unchecked({
     }
 })
 
+if ($controls.btnSidebarToggle) {
+    $controls.btnSidebarToggle.Add_Click({ Toggle-Sidebar })
+}
+
 Set-Theme -Dark $script:isDarkTheme
 Load-Page "Tools"
 
@@ -2349,3 +2587,7 @@ Write-Host ""
 Write-Host "Opening GUI..." -ForegroundColor Cyan
 
 $window.ShowDialog() | Out-Null
+
+
+
+

@@ -1,6 +1,6 @@
 ﻿{
     "DownloadPath":  "C:\\Users\\S P A R O\\Desktop\\PS1 SCRIPTS\\DevToolsInstaller\\Downloads",
     "AutoRunHealthAfterInstall":  true,
-    "AutoCheckUpdates":  true,
+    "AutoCheckUpdates":  false,
     "PreferredTheme":  "Dark"
 }
