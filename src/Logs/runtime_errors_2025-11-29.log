@@ -1,0 +1,199 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20251129225243
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 2588
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+? Sidebar Navigation + Profiles
+? Health Dashboard & Reports
+? Update Center (Chocolatey)
+? Saved Settings + Theme
+? 34 Development Tools + 22 VS Code Extensions
+
+Opening GUI...
+PS>TerminatingError(Set-EmojiContent): "Cannot process argument transformation on parameter 'FontSize'. Cannot convert value "Â£Ã" to type "System.Int32". Error: "Input string was not in a correct format.""
+>> TerminatingError(Set-EmojiContent): "Cannot process argument transformation on parameter 'FontSize'. Cannot convert value "Â£Ã" to type "System.Int32". Error: "Input string was not in a correct format.""
+>> TerminatingError(Set-EmojiContent): "Cannot process argument transformation on parameter 'FontSize'. Cannot convert value "Â£Ã" to type "System.Int32". Error: "Input string was not in a correct format.""
+[ERROR] Unhandled error: Cannot process argument transformation on parameter 'FontSize'. Cannot convert value "Â£Ã" to type "System.Int32". Error: "Input string was not in a correct format."
+**********************
+Windows PowerShell transcript end
+End time: 20251129225248
+**********************
+﻿**********************
+PowerShell transcript start
+Start time: 20251129225406
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -NoLogo -NoProfile -ExecutionPolicy Bypass -File src/DevToolsInstaller.ps1
+Process ID: 5736
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+**********************
+PowerShell transcript end
+End time: 20251129225423
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20251129225432
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 14144
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+? Sidebar Navigation + Profiles
+? Health Dashboard & Reports
+? Update Center (Chocolatey)
+? Saved Settings + Theme
+? 34 Development Tools + 22 VS Code Extensions
+
+Opening GUI...
+PS>TerminatingError(Where-Object): "The term 'Test-ToolInstalled' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again."
+>> TerminatingError(Where-Object): "The term 'Test-ToolInstalled' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again."
+[ERROR] Unhandled error: The term 'Test-ToolInstalled' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+**********************
+Windows PowerShell transcript end
+End time: 20251129225522
+**********************
+﻿**********************
+PowerShell transcript start
+Start time: 20251129225755
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -NoLogo -NoProfile -ExecutionPolicy Bypass -File src/DevToolsInstaller.ps1
+Process ID: 17924
+PSVersion: 7.5.4
+PSEdition: Core
+GitCommitId: 7.5.4
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+**********************
+PowerShell transcript end
+End time: 20251129225800
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20251129230446
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 3552
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+? Sidebar Navigation + Profiles
+? Health Dashboard & Reports
+? Update Center (Chocolatey)
+? Saved Settings + Theme
+? 34 Development Tools + 22 VS Code Extensions
+
+Opening GUI...
+[INFO] Chocolatey is already installed. Skipping installation.
+[INFO] 7Zip is already installed. Skipping installation.
+[INFO] 7Zip is already installed. Skipping installation.
+[INFO] Skipped 1 already-installed tools.
+[ERROR] AWSCLI was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: AWSCLI
+[INFO] Total failed: 1
+**********************
+Windows PowerShell transcript start
+Start time: 20251129232403
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 24100
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+? Sidebar Navigation + Profiles
+? Health Dashboard & Reports
+? Update Center (Chocolatey)
+? Saved Settings + Theme
+? 34 Development Tools + 22 VS Code Extensions
+
+Opening GUI...
+[ERROR] NotepadPP was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: NotepadPP
+[INFO] Total failed: 1

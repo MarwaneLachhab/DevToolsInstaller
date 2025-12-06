@@ -1,0 +1,76 @@
+﻿2025-12-06 14:31:33 [INFO] Installing slack via Chocolatey
+2025-12-06 14:31:33 [INFO] Running: choco install slack -y --no-progress --limit-output 
+2025-12-06 14:31:56 [INFO] Chocolatey exit code for slack : 0
+2025-12-06 14:31:58 [SUCCESS] slack verified in lib folder (found: slack)
+2025-12-06 14:31:58 [SUCCESS] slack installed successfully via Chocolatey
+2025-12-06 14:34:20 [INFO] Installing postman via Chocolatey
+2025-12-06 14:34:20 [INFO] Running: choco install postman -y --no-progress --limit-output 
+2025-12-06 14:34:26 [INFO] Chocolatey exit code for postman : 0
+2025-12-06 14:34:28 [SUCCESS] postman verified in lib folder (found: postman)
+2025-12-06 14:34:28 [SUCCESS] postman installed successfully via Chocolatey
+2025-12-06 14:34:40 [INFO] Installing docker-desktop via Chocolatey
+2025-12-06 14:34:40 [INFO] Running: choco install docker-desktop -y --no-progress --limit-output 
+2025-12-06 14:35:46 [INFO] Chocolatey exit code for docker-desktop : 0
+2025-12-06 14:35:48 [SUCCESS] docker-desktop verified in lib folder (found: docker-desktop)
+2025-12-06 14:35:48 [SUCCESS] docker-desktop installed successfully via Chocolatey
+2025-12-06 14:35:49 [INFO] Installing googlechrome via Chocolatey
+2025-12-06 14:35:49 [INFO] Using --ignore-checksums for googlechrome (auto-updating package)
+2025-12-06 14:35:49 [INFO] Running: choco install googlechrome -y --no-progress --limit-output --ignore-checksums
+2025-12-06 14:36:39 [INFO] Chocolatey exit code for googlechrome : 0
+2025-12-06 14:36:41 [SUCCESS] googlechrome verified in lib folder (found: GoogleChrome)
+2025-12-06 14:36:41 [SUCCESS] googlechrome installed successfully via Chocolatey
+2025-12-06 14:36:42 [INFO] Installing azure-cli via Chocolatey
+2025-12-06 14:36:42 [INFO] Running: choco install azure-cli -y --no-progress --limit-output 
+2025-12-06 14:37:59 [INFO] Chocolatey exit code for azure-cli : 0
+2025-12-06 14:38:01 [SUCCESS] azure-cli verified in lib folder (found: azure-cli)
+2025-12-06 14:38:01 [SUCCESS] azure-cli installed successfully via Chocolatey
+2025-12-06 15:01:06 [INFO] Installing 7zip via Chocolatey
+2025-12-06 15:01:06 [INFO] Running: choco install 7zip -y --no-progress --limit-output 
+2025-12-06 15:01:11 [INFO] Chocolatey exit code for 7zip : 0
+2025-12-06 15:01:13 [SUCCESS] 7zip verified in lib folder (found: 7zip)
+2025-12-06 15:01:13 [SUCCESS] 7zip installed successfully via Chocolatey
+2025-12-06 15:06:26 [INFO] Installing 7zip via Chocolatey
+2025-12-06 15:06:26 [INFO] Running: choco install 7zip -y --no-progress --limit-output 
+2025-12-06 15:06:30 [INFO] Chocolatey exit code for 7zip : 0
+2025-12-06 15:06:32 [SUCCESS] 7zip verified in lib folder (found: 7zip)
+2025-12-06 15:06:32 [SUCCESS] 7zip installed successfully via Chocolatey
+2025-12-06 15:07:32 [INFO] Installing notepadplusplus via Chocolatey
+2025-12-06 15:07:32 [INFO] Running: choco install notepadplusplus -y --no-progress --limit-output 
+2025-12-06 15:07:40 [INFO] Chocolatey exit code for notepadplusplus : 0
+2025-12-06 15:07:42 [SUCCESS] notepadplusplus verified in lib folder (found: notepadplusplus)
+2025-12-06 15:07:42 [SUCCESS] notepadplusplus installed successfully via Chocolatey
+2025-12-06 15:12:40 [INFO] Installing 7zip via Chocolatey
+2025-12-06 15:12:40 [INFO] Running: choco install 7zip -y --no-progress --limit-output 
+2025-12-06 15:12:45 [INFO] Chocolatey exit code for 7zip : 0
+2025-12-06 15:12:47 [SUCCESS] 7zip verified in lib folder (found: 7zip)
+2025-12-06 15:12:47 [SUCCESS] 7zip installed successfully via Chocolatey
+2025-12-06 15:16:00 [INFO] Installing 7zip via Chocolatey
+2025-12-06 15:16:00 [INFO] Running: choco install 7zip -y --no-progress --limit-output 
+2025-12-06 15:16:05 [INFO] Chocolatey exit code for 7zip : 0
+2025-12-06 15:16:07 [SUCCESS] 7zip verified in lib folder (found: 7zip)
+2025-12-06 15:16:07 [SUCCESS] 7zip installed successfully via Chocolatey
+2025-12-06 15:17:20 [INFO] Installing 7zip via Chocolatey
+2025-12-06 15:17:20 [INFO] Running: choco install 7zip -y --no-progress --limit-output 
+2025-12-06 15:17:24 [INFO] Chocolatey exit code for 7zip : 0
+2025-12-06 15:17:26 [SUCCESS] 7zip verified in lib folder (found: 7zip)
+2025-12-06 15:17:26 [SUCCESS] 7zip installed successfully via Chocolatey
+2025-12-06 15:18:16 [INFO] Installing redis-64 via Chocolatey
+2025-12-06 15:18:16 [INFO] Running: choco install redis-64 -y --no-progress --limit-output 
+2025-12-06 15:18:25 [INFO] Chocolatey exit code for redis-64 : 0
+2025-12-06 15:18:27 [SUCCESS] redis-64 verified in lib folder (found: redis-64)
+2025-12-06 15:18:27 [SUCCESS] redis-64 installed successfully via Chocolatey
+2025-12-06 15:26:41 [INFO] Installing 7zip via Chocolatey
+2025-12-06 15:26:41 [INFO] Running: choco install 7zip -y --no-progress --limit-output 
+2025-12-06 15:26:46 [INFO] Chocolatey exit code for 7zip : 0
+2025-12-06 15:26:48 [SUCCESS] 7zip verified in lib folder (found: 7zip)
+2025-12-06 15:26:48 [SUCCESS] 7zip installed successfully via Chocolatey
+2025-12-06 15:29:49 [INFO] Installing 7zip via Chocolatey
+2025-12-06 15:29:49 [INFO] Running: choco install 7zip -y --no-progress --limit-output 
+2025-12-06 15:29:53 [INFO] Chocolatey exit code for 7zip : 0
+2025-12-06 15:29:55 [SUCCESS] 7zip verified in lib folder (found: 7zip)
+2025-12-06 15:29:55 [SUCCESS] 7zip installed successfully via Chocolatey
+2025-12-06 15:33:28 [INFO] Installing 7zip via Chocolatey
+2025-12-06 15:33:28 [INFO] Running: choco install 7zip -y --no-progress --limit-output 
+2025-12-06 15:33:33 [INFO] Chocolatey exit code for 7zip : 0
+2025-12-06 15:33:35 [SUCCESS] 7zip verified in lib folder (found: 7zip)
+2025-12-06 15:33:35 [SUCCESS] 7zip installed successfully via Chocolatey

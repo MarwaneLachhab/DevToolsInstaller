@@ -1,0 +1,70 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20251203233348
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 22324
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-03.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+? Sidebar Navigation + Profiles
+? Health Dashboard & Reports
+? Update Center (Chocolatey)
+? Saved Settings + Theme
+? 34 Development Tools + 22 VS Code Extensions
+
+Opening GUI...
+[ERROR] Chrome was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: Chrome
+[INFO] Total failed: 1
+[ERROR] Chrome was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: Chrome
+[INFO] Total failed: 1
+**********************
+Windows PowerShell transcript start
+Start time: 20251203233951
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 4184
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-03.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+? Sidebar Navigation + Profiles
+? Health Dashboard & Reports
+? Update Center (Chocolatey)
+? Saved Settings + Theme
+? 34 Development Tools + 22 VS Code Extensions
+
+Opening GUI...

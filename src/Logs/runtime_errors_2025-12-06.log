@@ -1,0 +1,698 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20251206141731
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 10076
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+**********************
+Windows PowerShell transcript start
+Start time: 20251206142318
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 16408
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+**********************
+Windows PowerShell transcript start
+Start time: 20251206142347
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 28168
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+**********************
+Windows PowerShell transcript start
+Start time: 20251206142752
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 6788
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[SUCCESS] Docker uninstall completed (UI confirmation)
+**********************
+Windows PowerShell transcript start
+Start time: 20251206143024
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 22360
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[SUCCESS] Chrome uninstall completed (UI confirmation)
+[SUCCESS] NotepadPP uninstall completed (UI confirmation)
+[SUCCESS] Slack verified as installed.
+
+[SUCCESS] All tools installed successfully!
+[SUCCESS] Slack uninstall completed (UI confirmation)
+[INFO] Chocolatey already installed. Skipping profile reinstall.
+[INFO] XAMPP already installed. Skipping profile reinstall.
+[INFO] Composer already installed. Skipping profile reinstall.
+[INFO] Laravel already installed. Skipping profile reinstall.
+[INFO] VSCode already installed. Skipping profile reinstall.
+[INFO] Git already installed. Skipping profile reinstall.
+[INFO] GitHubDesktop already installed. Skipping profile reinstall.
+[INFO] Skipped 7 already-installed tools from PHP profile.
+True
+[SUCCESS] Postman verified as installed.
+
+[SUCCESS] PHP profile installed successfully!
+[INFO] Python already installed. Skipping profile reinstall.
+[INFO] VSCode already installed. Skipping profile reinstall.
+[INFO] Git already installed. Skipping profile reinstall.
+[INFO] AWSCLI already installed. Skipping profile reinstall.
+[INFO] Skipped 4 already-installed tools from Python profile.
+True
+True
+True
+[SUCCESS] Docker verified as installed.
+[SUCCESS] Chrome verified as installed.
+[SUCCESS] AzureCLI verified as installed.
+
+[SUCCESS] Python profile installed successfully!
+**********************
+Windows PowerShell transcript start
+Start time: 20251206143838
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 22548
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+**********************
+Windows PowerShell transcript start
+Start time: 20251206144249
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -WindowStyle Hidden -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 36244
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+**********************
+Windows PowerShell transcript end
+End time: 20251206144448
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20251206144452
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 34448
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+**********************
+Windows PowerShell transcript start
+Start time: 20251206144808
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 36728
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[INFO] VSCode is already installed. Skipping installation.
+[INFO] VSCode is already installed. Skipping installation.
+[INFO] Skipping already installed: VSCode
+[ERROR] React was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: React
+[INFO] Total failed: 1
+**********************
+Windows PowerShell transcript start
+Start time: 20251206145045
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 16308
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+**********************
+Windows PowerShell transcript start
+Start time: 20251206145154
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 35032
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+**********************
+Windows PowerShell transcript start
+Start time: 20251206145616
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 20496
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+**********************
+Windows PowerShell transcript end
+End time: 20251206145640
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20251206145939
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 30476
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[ERROR] React was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: React
+[INFO] Total failed: 1
+[SUCCESS] Postman uninstall completed (UI confirmation)
+[SUCCESS] Chrome uninstall completed (UI confirmation)
+[SUCCESS] 7Zip verified as installed.
+
+[SUCCESS] All tools installed successfully!
+**********************
+Windows PowerShell transcript start
+Start time: 20251206150553
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 9880
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[SUCCESS] 7Zip uninstall completed (UI confirmation)
+[SUCCESS] 7Zip verified as installed.
+
+[SUCCESS] All tools installed successfully!
+[SUCCESS] 7Zip uninstall completed (UI confirmation)
+[SUCCESS] NotepadPP verified as installed.
+
+[SUCCESS] All tools installed successfully!
+**********************
+Windows PowerShell transcript end
+End time: 20251206151220
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20251206151225
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 17160
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[SUCCESS] 7Zip verified as installed.
+
+[SUCCESS] All tools installed successfully!
+**********************
+Windows PowerShell transcript start
+Start time: 20251206151531
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 34252
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[SUCCESS] 7Zip uninstall completed (UI confirmation)
+[SUCCESS] 7Zip verified as installed.
+
+[SUCCESS] All tools installed successfully!
+[SUCCESS] 7Zip uninstall completed (UI confirmation)
+[SUCCESS] 7Zip verified as installed.
+
+[SUCCESS] All tools installed successfully!
+[SUCCESS] 7Zip uninstall completed (UI confirmation)
+[ERROR] React was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: React
+[INFO] Total failed: 1
+[SUCCESS] Redis verified as installed.
+
+[SUCCESS] All tools installed successfully!
+[SUCCESS] Redis uninstall completed (UI confirmation)
+**********************
+Windows PowerShell transcript start
+Start time: 20251206152031
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 29220
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[SUCCESS] Terraform uninstall completed (UI confirmation)
+[SUCCESS] NotepadPP uninstall completed (UI confirmation)
+[SUCCESS] 7Zip verified as installed.
+
+[SUCCESS] All tools installed successfully!
+**********************
+Windows PowerShell transcript end
+End time: 20251206152836
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20251206152841
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 10728
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[SUCCESS] 7Zip uninstall completed (UI confirmation)
+[SUCCESS] 7Zip verified as installed.
+
+[SUCCESS] All tools installed successfully!
+[SUCCESS] 7Zip uninstall completed (UI confirmation)
+**********************
+Windows PowerShell transcript end
+End time: 20251206153020
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20251206153316
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1
+Process ID: 32436
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[SUCCESS] 7Zip verified as installed.
+
+[SUCCESS] All tools installed successfully!

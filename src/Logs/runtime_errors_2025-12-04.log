@@ -1,0 +1,200 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20251204000448
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 22804
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+PS>TerminatingError(): "Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character.""
+>> TerminatingError(): "Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character.""
+>> TerminatingError(): "Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character.""
+[ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+PS>TerminatingError(): "Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character.""
+>> TerminatingError(): "Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character.""
+[ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+? Sidebar Navigation + Profiles
+? Health Dashboard & Reports
+? Update Center (Chocolatey)
+? Saved Settings + Theme
+? 34 Development Tools + 22 VS Code Extensions
+
+Opening GUI...
+PS>TerminatingError(): "Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character.""
+>> TerminatingError(): "Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character.""
+[ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+**********************
+Windows PowerShell transcript end
+End time: 20251204000451
+**********************
+**********************
+Windows PowerShell transcript start
+Start time: 20251204000606
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 24152
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+PS>TerminatingError(): "Cannot overwrite variable Host because it is read-only or constant."
+PS>TerminatingError(): "Cannot overwrite variable Host because it is read-only or constant."
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+? Sidebar Navigation + Profiles
+? Health Dashboard & Reports
+? Update Center (Chocolatey)
+? Saved Settings + Theme
+? 34 Development Tools + 22 VS Code Extensions
+
+Opening GUI...
+PS>TerminatingError(): "Cannot overwrite variable Host because it is read-only or constant."
+[ERROR] Chrome was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: Chrome
+[INFO] Total failed: 1
+PS>TerminatingError(): "Cannot overwrite variable Host because it is read-only or constant."
+**********************
+Windows PowerShell transcript start
+Start time: 20251204001248
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 35600
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+PS>TerminatingError(): "Cannot overwrite variable Host because it is read-only or constant."
+PS>TerminatingError(): "Cannot overwrite variable Host because it is read-only or constant."
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+PS>TerminatingError(): "Cannot overwrite variable Host because it is read-only or constant."
+[INFO] 7Zip is already installed. Skipping installation.
+[ERROR] Chrome was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: Chrome
+[INFO] Total failed: 1
+PS>TerminatingError(): "Cannot overwrite variable Host because it is read-only or constant."
+[ERROR] Terraform was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: Terraform
+[INFO] Total failed: 1
+PS>TerminatingError(): "Cannot overwrite variable Host because it is read-only or constant."
+PS>TerminatingError(): "Cannot overwrite variable Host because it is read-only or constant."
+**********************
+Windows PowerShell transcript start
+Start time: 20251204002548
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 32056
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[ERROR] AWSCLI was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: AWSCLI
+[INFO] Total failed: 1
+**********************
+Windows PowerShell transcript start
+Start time: 20251204004112
+Username: SPARO\S P A R O
+RunAs User: SPARO\S P A R O
+Configuration Name: 
+Machine: SPARO (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\\DevToolsInstaller.ps1
+Process ID: 11940
+PSVersion: 5.1.26100.7019
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.7019
+BuildVersion: 10.0.26100.7019
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+[INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+========================================
+Development Tools Installer V2.0
+Created by SPARO c 2025
+========================================
+
+✅ Sidebar Navigation + Profiles
+✅ Health Dashboard & Reports
+✅ Update Center (Chocolatey)
+✅ Saved Settings + Theme
+✅ 34 Development Tools + 22 VS Code Extensions
+
+🚀 Opening GUI...
+[ERROR] GitHubCLI was not detected after installation finished.
+
+[WARNING] Installation completed with failures for: GitHubCLI
+[INFO] Total failed: 1

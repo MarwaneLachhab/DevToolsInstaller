@@ -1,0 +1,481 @@
+﻿2025-11-29 22:12:08 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:12:08 [ERROR] Unhandled error: At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Layout.ps1:423 char:25
++ function New-ThemeBrush {
++                         ~
+Missing closing '}' in statement block or type definition.
+2025-11-29 22:12:08 [ERROR] Unhandled error: At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\Navigation.Actions.ps1:389 char:45
++                 $btnUninstall.Content = "ðŸ—‘ï¸ Uninstall"
++                                             ~~~~~~~~~~~~~~~
+The string is missing the terminator: '.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\Navigation.Actions.ps1:9 char:17
++         "Tools" {
++                 ~
+Missing closing '}' in statement block or type definition.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\Navigation.Actions.ps1:8 char:24
++     switch ($PageName) {
++                        ~
+Missing closing '}' in statement block or type definition.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\Navigation.Actions.ps1:2 char:24
++ function Set-ActionBar {
++                        ~
+Missing closing '}' in statement block or type definition.
+2025-11-29 22:12:08 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:12:08 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:12:08 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:12:08 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:12:08 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:12:08 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:12:08 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:12:08 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:12:08 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:12:08 [ERROR] Unhandled error: The term 'Set-Theme' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:12:08 [ERROR] Unhandled error: The term 'Load-Page' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:12:08 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:19 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:25:19 [ERROR] Unhandled error: At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Layout.ps1:687 char:48
++     progressBar = $window.FindName("progressBar")
++                                                ~~
+The string is missing the terminator: ".
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Layout.ps1:649 char:42
++     sidebarContainer = $window.FindName("sidebarContainer")
++                                          ~~~~~~~~~~~~~~~~~~
+Unexpected token 'sidebarContainer")
+    sidebarBranding = $window.FindName("sidebarBranding")
+    themeCard = $window.FindName("themeCard")
+    themeLayout = $window.FindName("themeLayout")
+    themeSwitchPanel = $window.FindName("themeSwitchPanel")
+    themeLabel = $window.FindName("txtThemeLabel")
+    btnNavTools = $window.FindName("btnNavTools")
+    btnNavProfiles = $window.FindName("btnNavProfiles")
+    btnNavExtensions = $window.FindName("btnNavExtensions")
+    btnNavHealth = $window.FindName("btnNavHealth")
+    btnNavUpdate = $window.FindName("btnNavUpdate")
+    btnNavSettings = $window.FindName("btnNavSettings")
+    btnNavAbout = $window.FindName("btnNavAbout")
+    btnThemeToggle = $window.FindName("btnThemeToggle")
+    runThemeStatusIcon = $window.FindName("runThemeStatusIcon")
+    runThemeStatusText = $window.FindName("runThemeStatusText")
+    btnSidebarToggle = $window.FindName("btnSidebarToggle")
+    lblNavTools = $window.FindName("lblNavTools")
+    lblNavProfiles = $window.FindName("lblNavProfiles")
+    lblNavExtensions = $window.FindName("lblNavExtensions")
+    lblNavHealth = $window.FindName("lblNavHealth")
+    lblNavUpdate = $window.FindName("lblNavUpdate")
+    lblNavSettings = $window.FindName("lblNavSettings")
+    lblNavAbout = $window.FindName("lblNavAbout")
+    
+    # Header
+    txtPageTitle = $window.FindName("txtPageTitle")
+    txtPageSubtitle = $window.FindName("txtPageSubtitle")
+    
+    # Action Bar
+    actionBar = $window.FindName("actionBar")
+    actionBarContent = $window.FindName("actionBarContent")
+    
+    # Content
+    mainContent = $window.FindName("mainContent")
+    
+    # Status
+    txtStatus = $window.FindName("txtStatus")
+    progressBar = $window.FindName("progressBar")
+}
+
+$controls.sidebarButtons = @(
+    $controls.btnNavTools,
+    $controls.btnNavProfiles,
+    $controls.btnNavExtensions,
+    $controls.btnNavHealth,
+    $controls.btnNavUpdate,
+    $controls.btnNavSettings,
+    $controls.btnNavAbout
+) | Where-Object { $_ }
+
+$controls.sidebarLabels = @(
+    $controls.lblNavTools,
+    $controls.lblNavProfiles,
+    $controls.lblNavExtensions,
+    $controls.lblNavHealth,
+    $controls.lblNavUpdate,
+    $controls.lblNavSettings,
+    $controls.lblNavAbout
+) | Where-Object { $_ }
+
+' in expression or statement.
+2025-11-29 22:25:19 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:19 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:19 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:19 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:19 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:19 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:19 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:19 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:19 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:19 [ERROR] Unhandled error: The term 'Set-Theme' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:25:19 [ERROR] Unhandled error: The property 'Background' cannot be found on this object. Verify that the property exists and can be set.
+2025-11-29 22:25:19 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:51 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:25:52 [ERROR] Unhandled error: At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Layout.ps1:687 char:48
++     progressBar = $window.FindName("progressBar")
++                                                ~~
+The string is missing the terminator: ".
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Layout.ps1:649 char:42
++     sidebarContainer = $window.FindName("sidebarContainer")
++                                          ~~~~~~~~~~~~~~~~~~
+Unexpected token 'sidebarContainer")
+    sidebarBranding = $window.FindName("sidebarBranding")
+    themeCard = $window.FindName("themeCard")
+    themeLayout = $window.FindName("themeLayout")
+    themeSwitchPanel = $window.FindName("themeSwitchPanel")
+    themeLabel = $window.FindName("txtThemeLabel")
+    btnNavTools = $window.FindName("btnNavTools")
+    btnNavProfiles = $window.FindName("btnNavProfiles")
+    btnNavExtensions = $window.FindName("btnNavExtensions")
+    btnNavHealth = $window.FindName("btnNavHealth")
+    btnNavUpdate = $window.FindName("btnNavUpdate")
+    btnNavSettings = $window.FindName("btnNavSettings")
+    btnNavAbout = $window.FindName("btnNavAbout")
+    btnThemeToggle = $window.FindName("btnThemeToggle")
+    runThemeStatusIcon = $window.FindName("runThemeStatusIcon")
+    runThemeStatusText = $window.FindName("runThemeStatusText")
+    btnSidebarToggle = $window.FindName("btnSidebarToggle")
+    lblNavTools = $window.FindName("lblNavTools")
+    lblNavProfiles = $window.FindName("lblNavProfiles")
+    lblNavExtensions = $window.FindName("lblNavExtensions")
+    lblNavHealth = $window.FindName("lblNavHealth")
+    lblNavUpdate = $window.FindName("lblNavUpdate")
+    lblNavSettings = $window.FindName("lblNavSettings")
+    lblNavAbout = $window.FindName("lblNavAbout")
+    
+    # Header
+    txtPageTitle = $window.FindName("txtPageTitle")
+    txtPageSubtitle = $window.FindName("txtPageSubtitle")
+    
+    # Action Bar
+    actionBar = $window.FindName("actionBar")
+    actionBarContent = $window.FindName("actionBarContent")
+    
+    # Content
+    mainContent = $window.FindName("mainContent")
+    
+    # Status
+    txtStatus = $window.FindName("txtStatus")
+    progressBar = $window.FindName("progressBar")
+}
+
+$controls.sidebarButtons = @(
+    $controls.btnNavTools,
+    $controls.btnNavProfiles,
+    $controls.btnNavExtensions,
+    $controls.btnNavHealth,
+    $controls.btnNavUpdate,
+    $controls.btnNavSettings,
+    $controls.btnNavAbout
+) | Where-Object { $_ }
+
+$controls.sidebarLabels = @(
+    $controls.lblNavTools,
+    $controls.lblNavProfiles,
+    $controls.lblNavExtensions,
+    $controls.lblNavHealth,
+    $controls.lblNavUpdate,
+    $controls.lblNavSettings,
+    $controls.lblNavAbout
+) | Where-Object { $_ }
+
+' in expression or statement.
+2025-11-29 22:25:52 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:52 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:52 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:52 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:52 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:52 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:52 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:52 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:52 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:25:52 [ERROR] Unhandled error: The term 'Set-Theme' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:25:52 [ERROR] Unhandled error: The property 'Background' cannot be found on this object. Verify that the property exists and can be set.
+2025-11-29 22:25:52 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-11-29 22:36:06 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:36:23 [ERROR] Unhandled error: A positional parameter cannot be found that accepts argument 'C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1\'.
+2025-11-29 22:36:23 [ERROR] Unhandled error: At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\Navigation.Actions.ps1:1 char:24
++ function Set-ActionBar {
++                        ~
+Missing closing '}' in statement block or type definition.
+2025-11-29 22:36:23 [ERROR] Unhandled error: The term 'Load-Page' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:36:24 [ERROR] Unhandled error: The term 'Load-Page' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:36:27 [ERROR] Unhandled error: The term 'Load-Page' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:36:38 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:36:38 [ERROR] Unhandled error: At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:85 char:86
++ ... tatusIcon.Text = if ($Dark) { "â‰¡Æ’Ã®Ã–" } else { "Î“Ã¿Ã‡âˆ©â••Ã…" }
++                                                           ~~~~~~~~~~~~~~~
+Unexpected token 'Ã¿Ã‡âˆ©â••Ã…" }
+        }
+        if ($controls.runThemeStatusText) {
+            $controls.runThemeStatusText.Text = if ($Dark) { "' in expression or statement.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:155 char:87
++ ... debarToggle.Content = if ($Collapsed) { "Î“Ã¿â–‘" } else { "Î“Æ’Â¿" }
++                                                                    ~~~~~~
+The string is missing the terminator: '.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:155 char:86
++ ... debarToggle.Content = if ($Collapsed) { "Î“Ã¿â–‘" } else { "Î“Æ’Â¿" }
++                                                                   ~~~~~~~
+Unexpected token 'Æ’Â¿" }
+        $controls.btnSidebarToggle.ToolTip = if ($Collapsed) { "Expand sidebar" } else { "Collapse sidebar" }
+    }
+}
+
+function Toggle-Sidebar {
+    Update-SidebarVisualState -Collapsed:(-not $script:isSidebarCollapsed) -Animate
+}
+
+function Set-EmojiContent {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Windows.Controls.ContentControl]$Control,
+        [Parameter(Mandatory = $true)]
+        [string]$Emoji,
+        [Parameter(Mandatory = $true)]
+        [string]$Text,
+        [int]$FontSize = 14
+    )
+    
+    $panel = New-Object System.Windows.Controls.StackPanel
+    $panel.Orientation = "Horizontal"
+    $panel.VerticalAlignment = "Center"
+    $panel.Margin = "0"
+    
+    $icon = New-Object System.Windows.Controls.TextBlock
+    $icon.Text = $Emoji
+    $icon.FontFamily = "Segoe UI Emoji"
+    $icon.Margin = "0,0,8,0"
+    $icon.FontSize = $FontSize
+    $icon.Foreground = $Control.Foreground
+    
+    $label = New-Object System.Windows.Controls.TextBlock
+    $label.Text = $Text
+    $label.FontSize = $FontSize
+    $label.Foreground = $Control.Foreground
+    
+    $panel.Children.Add($icon) | Out-Null
+    $panel.Children.Add($label) | Out-Null
+    
+    $Control.Content = $panel
+}
+
+# Function to create Tools page content
+' in expression or statement.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:155 char:81
++ ... nSidebarToggle.Content = if ($Collapsed) { "Î“Ã¿â–‘" } else { "Î“Æ’Â¿ ...
++                                                                 ~
+Missing closing '}' in statement block or type definition.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:84 char:43
++         if ($controls.runThemeStatusIcon) {
++                                           ~
+Missing closing '}' in statement block or type definition.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:63 char:20
++ function Set-Theme {
++                    ~
+Missing closing '}' in statement block or type definition.
+2025-11-29 22:36:38 [ERROR] Unhandled error: At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\Navigation.Actions.ps1:1 char:24
++ function Set-ActionBar {
++                        ~
+Missing closing '}' in statement block or type definition.
+2025-11-29 22:36:38 [ERROR] Unhandled error: The term 'Set-Theme' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:36:38 [ERROR] Unhandled error: The term 'Load-Page' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:36:40 [ERROR] Unhandled error: The term 'Load-Page' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:38:04 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:38:13 [ERROR] Unhandled error: A positional parameter cannot be found that accepts argument 'C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\DevToolsInstaller.ps1\'.
+2025-11-29 22:40:30 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:41:13 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:41:13 [ERROR] Unhandled error: At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:85 char:86
++ ... tatusIcon.Text = if ($Dark) { "â‰¡Æ’Ã®Ã–" } else { "Î“Ã¿Ã‡âˆ©â••Ã…" }
++                                                           ~~~~~~~~~~~~~~~
+Unexpected token 'Ã¿Ã‡âˆ©â••Ã…" }
+        }
+        if ($controls.runThemeStatusText) {
+            $controls.runThemeStatusText.Text = if ($Dark) { "' in expression or statement.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:155 char:87
++ ... debarToggle.Content = if ($Collapsed) { "Î“Ã¿â–‘" } else { "Î“Æ’Â¿" }
++                                                                    ~~~~~~
+The string is missing the terminator: '.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:155 char:86
++ ... debarToggle.Content = if ($Collapsed) { "Î“Ã¿â–‘" } else { "Î“Æ’Â¿" }
++                                                                   ~~~~~~~
+Unexpected token 'Æ’Â¿" }
+        $controls.btnSidebarToggle.ToolTip = if ($Collapsed) { "Expand sidebar" } else { "Collapse sidebar" }
+    }
+}
+
+function Toggle-Sidebar {
+    Update-SidebarVisualState -Collapsed:(-not $script:isSidebarCollapsed) -Animate
+}
+
+function Set-EmojiContent {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Windows.Controls.ContentControl]$Control,
+        [Parameter(Mandatory = $true)]
+        [string]$Emoji,
+        [Parameter(Mandatory = $true)]
+        [string]$Text,
+        [int]$FontSize = 14
+    )
+    
+    $panel = New-Object System.Windows.Controls.StackPanel
+    $panel.Orientation = "Horizontal"
+    $panel.VerticalAlignment = "Center"
+    $panel.Margin = "0"
+    
+    $icon = New-Object System.Windows.Controls.TextBlock
+    $icon.Text = $Emoji
+    $icon.FontFamily = "Segoe UI Emoji"
+    $icon.Margin = "0,0,8,0"
+    $icon.FontSize = $FontSize
+    $icon.Foreground = $Control.Foreground
+    
+    $label = New-Object System.Windows.Controls.TextBlock
+    $label.Text = $Text
+    $label.FontSize = $FontSize
+    $label.Foreground = $Control.Foreground
+    
+    $panel.Children.Add($icon) | Out-Null
+    $panel.Children.Add($label) | Out-Null
+    
+    $Control.Content = $panel
+}
+
+# Function to create Tools page content
+' in expression or statement.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:155 char:81
++ ... nSidebarToggle.Content = if ($Collapsed) { "Î“Ã¿â–‘" } else { "Î“Æ’Â¿ ...
++                                                                 ~
+Missing closing '}' in statement block or type definition.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:84 char:43
++         if ($controls.runThemeStatusIcon) {
++                                           ~
+Missing closing '}' in statement block or type definition.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:63 char:20
++ function Set-Theme {
++                    ~
+Missing closing '}' in statement block or type definition.
+2025-11-29 22:41:13 [ERROR] Unhandled error: The term 'Set-Theme' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:41:13 [ERROR] Unhandled error: The term 'Set-EmojiContent' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:41:45 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:42:38 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:46:44 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:46:44 [ERROR] Unhandled error: At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:85 char:86
++ ... tatusIcon.Text = if ($Dark) { "â‰¡Æ’Ã®Ã–" } else { "Î“Ã¿Ã‡âˆ©â••Ã…" }
++                                                           ~~~~~~~~~~~~~~~
+Unexpected token 'Ã¿Ã‡âˆ©â••Ã…" }
+        }
+        if ($controls.runThemeStatusText) {
+            $controls.runThemeStatusText.Text = if ($Dark) { "' in expression or statement.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:155 char:87
++ ... debarToggle.Content = if ($Collapsed) { "Î“Ã¿â–‘" } else { "Î“Æ’Â¿" }
++                                                                    ~~~~~~
+The string is missing the terminator: '.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:155 char:86
++ ... debarToggle.Content = if ($Collapsed) { "Î“Ã¿â–‘" } else { "Î“Æ’Â¿" }
++                                                                   ~~~~~~~
+Unexpected token 'Æ’Â¿" }
+        $controls.btnSidebarToggle.ToolTip = if ($Collapsed) { "Expand sidebar" } else { "Collapse sidebar" }
+    }
+}
+
+function Toggle-Sidebar {
+    Update-SidebarVisualState -Collapsed:(-not $script:isSidebarCollapsed) -Animate
+}
+
+function Set-EmojiContent {
+    param(
+        [Parameter(Mandatory = $true)]
+        [System.Windows.Controls.ContentControl]$Control,
+        [Parameter(Mandatory = $true)]
+        [string]$Emoji,
+        [Parameter(Mandatory = $true)]
+        [string]$Text,
+        [int]$FontSize = 14
+    )
+    
+    $panel = New-Object System.Windows.Controls.StackPanel
+    $panel.Orientation = "Horizontal"
+    $panel.VerticalAlignment = "Center"
+    $panel.Margin = "0"
+    
+    $icon = New-Object System.Windows.Controls.TextBlock
+    $icon.Text = $Emoji
+    $icon.FontFamily = "Segoe UI Emoji"
+    $icon.Margin = "0,0,8,0"
+    $icon.FontSize = $FontSize
+    $icon.Foreground = $Control.Foreground
+    
+    $label = New-Object System.Windows.Controls.TextBlock
+    $label.Text = $Text
+    $label.FontSize = $FontSize
+    $label.Foreground = $Control.Foreground
+    
+    $panel.Children.Add($icon) | Out-Null
+    $panel.Children.Add($label) | Out-Null
+    
+    $Control.Content = $panel
+}
+
+# Function to create Tools page content
+' in expression or statement.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:155 char:81
++ ... nSidebarToggle.Content = if ($Collapsed) { "Î“Ã¿â–‘" } else { "Î“Æ’Â¿ ...
++                                                                 ~
+Missing closing '}' in statement block or type definition.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:84 char:43
++         if ($controls.runThemeStatusIcon) {
++                                           ~
+Missing closing '}' in statement block or type definition.
+
+At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\UiLayout.Theme.ps1:63 char:20
++ function Set-Theme {
++                    ~
+Missing closing '}' in statement block or type definition.
+2025-11-29 22:46:44 [ERROR] Unhandled error: The term 'Set-Theme' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:46:45 [ERROR] Unhandled error: The term 'Set-EmojiContent' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:47:39 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:51:12 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:51:18 [ERROR] Unhandled error: Cannot process argument transformation on parameter 'FontSize'. Cannot convert value "Â£Ã" to type "System.Int32". Error: "Input string was not in a correct format."
+2025-11-29 22:51:24 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:51:40 [ERROR] Unhandled error: Cannot process argument transformation on parameter 'FontSize'. Cannot convert value "Â£Ã" to type "System.Int32". Error: "Input string was not in a correct format."
+2025-11-29 22:52:43 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:52:48 [ERROR] Unhandled error: Cannot process argument transformation on parameter 'FontSize'. Cannot convert value "Â£Ã" to type "System.Int32". Error: "Input string was not in a correct format."
+2025-11-29 22:54:06 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:54:32 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 22:55:22 [ERROR] Unhandled error: The term 'Test-ToolInstalled' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-11-29 22:57:55 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 23:04:46 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 23:13:42 [INFO] Chocolatey is already installed. Skipping installation.
+2025-11-29 23:13:56 [INFO] 7Zip is already installed. Skipping installation.
+2025-11-29 23:14:06 [INFO] 7Zip is already installed. Skipping installation.
+2025-11-29 23:14:07 [INFO] Skipped 1 already-installed tools.
+2025-11-29 23:14:08 [ERROR] AWSCLI was not detected after installation finished.
+2025-11-29 23:17:33 [ERROR] AzureCLI was not detected after installation finished.
+2025-11-29 23:24:03 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-11-29.log
+2025-11-29 23:24:33 [ERROR] NotepadPP was not detected after installation finished.

@@ -1,0 +1,15 @@
+﻿2025-11-24 18:42:02 [INFO] Uninstalling Docker via Chocolatey
+2025-11-24 18:42:05 [ERROR] Docker uninstall failed with exit code 1
+2025-11-24 18:42:05 [ERROR] Docker uninstall failed at UI stage. See earlier log entries for details.
+2025-11-24 18:42:55 [INFO] Uninstalling Postman via Chocolatey
+2025-11-24 18:43:04 [SUCCESS] Postman uninstalled successfully via Chocolatey
+2025-11-24 18:43:04 [SUCCESS] Postman uninstall completed (UI confirmation)
+2025-11-24 18:43:14 [INFO] Uninstalling Terraform via Chocolatey
+2025-11-24 18:43:21 [SUCCESS] Terraform uninstalled successfully via Chocolatey
+2025-11-24 18:43:21 [SUCCESS] Terraform uninstall completed (UI confirmation)
+2025-11-24 18:43:28 [INFO] Uninstalling AzureCLI via Chocolatey
+2025-11-24 18:44:24 [SUCCESS] AzureCLI uninstalled successfully via Chocolatey
+2025-11-24 18:44:24 [SUCCESS] AzureCLI uninstall completed (UI confirmation)
+2025-11-24 18:45:31 [INFO] Uninstalling NotepadPP via Chocolatey
+2025-11-24 18:45:43 [SUCCESS] NotepadPP uninstalled successfully via Chocolatey
+2025-11-24 18:45:43 [SUCCESS] NotepadPP uninstall completed (UI confirmation)

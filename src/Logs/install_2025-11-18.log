@@ -1,0 +1,55 @@
+﻿2025-11-18 16:15:19 [INFO] Uninstalling 7Zip via Chocolatey
+2025-11-18 16:15:31 [SUCCESS] 7Zip uninstalled successfully via Chocolatey
+2025-11-18 16:15:31 [SUCCESS] 7Zip uninstall completed (UI confirmation)
+2025-11-18 16:15:53 [INFO] Installing 7zip via Chocolatey
+2025-11-18 16:15:54 [ERROR] 7Zip was not detected after installation finished.
+2025-11-18 16:23:47 [INFO] Uninstalling 7Zip via Chocolatey
+2025-11-18 16:23:59 [SUCCESS] 7Zip uninstalled successfully via Chocolatey
+2025-11-18 16:23:59 [SUCCESS] 7Zip uninstall completed (UI confirmation)
+2025-11-18 16:24:08 [INFO] Installing 7zip via Chocolatey
+2025-11-18 16:24:09 [ERROR] 7Zip was not detected after installation finished.
+2025-11-18 16:24:26 [INFO] Uninstalling 7Zip via Chocolatey
+2025-11-18 16:24:38 [SUCCESS] 7Zip uninstalled successfully via Chocolatey
+2025-11-18 16:24:38 [SUCCESS] 7Zip uninstall completed (UI confirmation)
+2025-11-18 16:24:51 [INFO] Uninstalling MySQLWorkbench via Chocolatey
+2025-11-18 16:25:03 [SUCCESS] MySQLWorkbench uninstalled successfully via Chocolatey
+2025-11-18 16:25:03 [SUCCESS] MySQLWorkbench uninstall completed (UI confirmation)
+2025-11-18 16:25:08 [INFO] Uninstalling Redis via Chocolatey
+2025-11-18 16:25:23 [SUCCESS] Redis uninstalled successfully via Chocolatey
+2025-11-18 16:25:23 [SUCCESS] Redis uninstall completed (UI confirmation)
+2025-11-18 16:25:28 [INFO] Installing 7zip via Chocolatey
+2025-11-18 16:25:30 [INFO] Installing notepadplusplus via Chocolatey
+2025-11-18 16:25:31 [ERROR] 7Zip was not detected after installation finished.
+2025-11-18 16:25:31 [ERROR] NotepadPP was not detected after installation finished.
+2025-11-18 16:25:52 [INFO] Uninstalling NotepadPP via Chocolatey
+2025-11-18 16:26:25 [SUCCESS] NotepadPP uninstalled successfully via Chocolatey
+2025-11-18 16:26:25 [SUCCESS] NotepadPP uninstall completed (UI confirmation)
+2025-11-18 16:26:32 [INFO] 7Zip is already installed. Skipping installation.
+2025-11-18 16:26:32 [INFO] Skipped 1 already-installed tools.
+2025-11-18 16:26:33 [INFO] Installing notepadplusplus via Chocolatey
+2025-11-18 16:26:35 [INFO] Installing github-desktop via Chocolatey
+2025-11-18 16:26:36 [ERROR] NotepadPP was not detected after installation finished.
+2025-11-18 16:26:36 [ERROR] GitHubDesktop was not detected after installation finished.
+2025-11-18 16:36:29 [INFO] Installing postman via Chocolatey
+2025-11-18 16:36:31 [ERROR] Postman was not detected after installation finished.
+2025-11-18 16:37:06 [INFO] Uninstalling AzureCLI via Chocolatey
+2025-11-18 16:38:06 [SUCCESS] AzureCLI uninstalled successfully via Chocolatey
+2025-11-18 16:38:06 [SUCCESS] AzureCLI uninstall completed (UI confirmation)
+2025-11-18 16:38:32 [INFO] AzureCLI is not currently installed via Chocolatey. Skipping uninstall.
+2025-11-18 16:38:32 [SUCCESS] AzureCLI uninstall completed (UI confirmation)
+2025-11-18 16:49:20 [INFO] NodeJS is already installed. Skipping installation.
+2025-11-18 16:49:20 [INFO] Python is already installed. Skipping installation.
+2025-11-18 16:49:20 [INFO] VSCode is already installed. Skipping installation.
+2025-11-18 16:49:28 [INFO] NodeJS is already installed. Skipping installation.
+2025-11-18 16:49:28 [INFO] Python is already installed. Skipping installation.
+2025-11-18 16:49:28 [INFO] VSCode is already installed. Skipping installation.
+2025-11-18 16:49:28 [INFO] Angular is already installed. Skipping installation.
+2025-11-18 16:49:28 [INFO] Skipped 4 already-installed tools.
+2025-11-18 16:49:29 [ERROR] React was not detected after installation finished.
+2025-11-18 16:49:51 [INFO] NodeJS is already installed. Skipping installation.
+2025-11-18 23:35:57 [INFO] Installing azure-cli via Chocolatey
+2025-11-18 23:35:58 [ERROR] AzureCLI was not detected after installation finished.
+2025-11-18 23:44:32 [INFO] AzureCLI is already installed. Skipping installation.
+2025-11-18 23:44:32 [INFO] Skipped 1 already-installed tools.
+2025-11-18 23:44:33 [INFO] Installing terraform via Chocolatey
+2025-11-18 23:44:34 [ERROR] Terraform was not detected after installation finished.

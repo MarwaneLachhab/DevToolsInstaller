@@ -1,0 +1,27 @@
+﻿2025-12-04 00:03:28 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+2025-12-04 00:03:29 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:03:29 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:03:34 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:03:48 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+2025-12-04 00:03:49 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:03:49 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:03:52 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:04:07 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+2025-12-04 00:04:08 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:04:08 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:04:40 [ERROR] Unhandled error: Cannot convert value "129513" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:04:48 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+2025-12-04 00:04:48 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:04:48 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:04:51 [ERROR] Unhandled error: Cannot convert value "128640" to type "System.Char". Error: "Value was either too large or too small for a character."
+2025-12-04 00:06:06 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+2025-12-04 00:06:20 [ERROR] Chrome was not detected after installation finished.
+2025-12-04 00:06:37 [INFO] Chocolatey already installed. Skipping profile reinstall.
+2025-12-04 00:12:48 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+2025-12-04 00:12:59 [INFO] 7Zip is already installed. Skipping installation.
+2025-12-04 00:13:07 [ERROR] Chrome was not detected after installation finished.
+2025-12-04 00:13:25 [ERROR] Terraform was not detected after installation finished.
+2025-12-04 00:25:48 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+2025-12-04 00:30:40 [ERROR] AWSCLI was not detected after installation finished.
+2025-12-04 00:41:12 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-04.log
+2025-12-04 00:41:54 [ERROR] GitHubCLI was not detected after installation finished.
