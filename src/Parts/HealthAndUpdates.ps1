@@ -43,7 +43,7 @@ function Get-HealthCheckResults {
             Component = "VS Code"
             Category = "IDE"
             Command = "code"
-            VersionArgs = @("--version")
+            SkipVersion = $true  # Don't run code --version as it can open VS Code window
             Recommendation = "Install VS Code from the Tools tab."
         },
         @{
@@ -161,7 +161,7 @@ function Get-HealthCheckResults {
         }
         
         if ($isHealthy) {
-            if ($check.Command) {
+            if ($check.Command -and -not $check.SkipVersion) {
                 $version = Get-VersionFromCommand -Command $check.Command -Arguments $check.VersionArgs -Pattern $check.VersionPattern
                 if ($version) {
                     $details = "Detected v$version"
@@ -173,7 +173,7 @@ function Get-HealthCheckResults {
             } elseif ($check.SuccessDetail) {
                 $details = $check.SuccessDetail
             } else {
-                $details = "Healthy"
+                $details = "Detected"
             }
         } elseif (-not [string]::IsNullOrWhiteSpace($check.FailureDetail)) {
             $details = $check.FailureDetail
@@ -199,6 +199,7 @@ function Render-HealthResults {
     
     $listView = $content.FindName("lvHealthResults")
     if ($listView) {
+        $listView.ItemsSource = $null
         $listView.ItemsSource = $Results
     }
     
@@ -235,90 +236,175 @@ function Render-HealthResults {
 function Invoke-HealthCheck {
     param([switch]$Silent)
     
-    if ($Silent) {
+    # Disable buttons and show loading state
+    if (-not $Silent) {
+        $content = $controls.mainContent.Content
+        $runButton = if ($content) { $content.FindName("btnRunHealthCheck") } else { $null }
+        $exportButton = if ($content) { $content.FindName("btnExportHealthReport") } else { $null }
+        
+        if ($runButton) { $runButton.IsEnabled = $false }
+        if ($exportButton) { $exportButton.IsEnabled = $false }
+        
         if ($controls.txtStatus) { $controls.txtStatus.Text = "Running health scan..." }
-        $results = Get-HealthCheckResults -OnProgress {
-            param($component, $position, $total)
-            if ($controls -and $controls.txtStatus) {
-                $controls.txtStatus.Text = "Checking $component ($position/$total)..."
+        
+        if ($content) {
+            $txtSummary = $content.FindName("txtHealthSummary")
+            if ($txtSummary) { $txtSummary.Text = "Running diagnostics..." }
+            $txtScore = $content.FindName("txtHealthScore")
+            if ($txtScore) { $txtScore.Text = "--%" }
+        }
+    }
+    
+    # Create a runspace to run health check in background
+    $runspace = [runspacefactory]::CreateRunspace()
+    $runspace.ApartmentState = "STA"
+    $runspace.ThreadOptions = "ReuseThread"
+    $runspace.Open()
+    
+    # Pass script root path to runspace
+    $scriptRoot = $PSScriptRoot
+    $runspace.SessionStateProxy.SetVariable("ScriptRoot", $scriptRoot)
+    
+    $powershell = [powershell]::Create()
+    $powershell.Runspace = $runspace
+    
+    # Script to run in background - replicates Get-HealthCheckResults logic
+    $script = {
+        param($ScriptRoot)
+        
+        # Define checks inline to avoid module loading issues
+        $checks = @(
+            @{ Component = "Node.js"; Category = "Core Runtime"; Command = "node"; VersionArgs = @("--version") },
+            @{ Component = "npm"; Category = "Core Runtime"; Command = "npm"; VersionArgs = @("--version") },
+            @{ Component = "Python"; Category = "Core Runtime"; Command = "python"; VersionArgs = @("--version") },
+            @{ Component = "Git"; Category = "Core Tools"; Command = "git"; VersionArgs = @("--version") },
+            @{ Component = "VS Code"; Category = "IDE"; Command = "code"; SkipVersion = $true },
+            @{ Component = "Docker"; Category = "Containers"; Command = "docker"; VersionArgs = @("--version") },
+            @{ Component = "Angular CLI"; Category = "Frameworks"; Command = "ng"; VersionArgs = @("--version") },
+            @{ Component = "Composer"; Category = "PHP Tooling"; Command = "composer"; VersionArgs = @("--version") },
+            @{ Component = "Azure CLI"; Category = "Cloud"; Command = "az"; VersionArgs = @("--version") },
+            @{ Component = "AWS CLI"; Category = "Cloud"; Command = "aws"; VersionArgs = @("--version") },
+            @{ Component = "Terraform"; Category = "Infrastructure"; Command = "terraform"; VersionArgs = @("--version") },
+            @{ Component = "kubectl"; Category = "Kubernetes"; Command = "kubectl"; VersionArgs = @("version","--client","--short") },
+            @{ Component = "Helm"; Category = "Kubernetes"; Command = "helm"; VersionArgs = @("version","--short") },
+            @{ Component = "Go"; Category = "Core Runtime"; Command = "go"; VersionArgs = @("version") },
+            @{ Component = "Rust/Cargo"; Category = "Core Runtime"; Command = "cargo"; VersionArgs = @("--version") },
+            @{ Component = "Java"; Category = "Core Runtime"; Command = "java"; VersionArgs = @("-version") },
+            @{ Component = "Maven"; Category = "Build Tools"; Command = "mvn"; VersionArgs = @("--version") },
+            @{ Component = "Gradle"; Category = "Build Tools"; Command = "gradle"; VersionArgs = @("--version") },
+            @{ Component = ".NET SDK"; Category = "Core Runtime"; Command = "dotnet"; VersionArgs = @("--version") },
+            @{ Component = "Ruby"; Category = "Core Runtime"; Command = "ruby"; VersionArgs = @("--version") }
+        )
+        
+        $results = @()
+        foreach ($check in $checks) {
+            $isHealthy = $false
+            $details = "Not installed"
+            try {
+                $cmd = Get-Command -Name $check.Command -ErrorAction SilentlyContinue -CommandType Application
+                if ($cmd) {
+                    $isHealthy = $true
+                    if (-not $check.SkipVersion -and $check.VersionArgs) {
+                        try {
+                            $psi = New-Object System.Diagnostics.ProcessStartInfo
+                            $psi.FileName = $check.Command
+                            $psi.Arguments = ($check.VersionArgs -join ' ')
+                            $psi.RedirectStandardOutput = $true
+                            $psi.RedirectStandardError = $true
+                            $psi.UseShellExecute = $false
+                            $psi.CreateNoWindow = $true
+                            $proc = [System.Diagnostics.Process]::Start($psi)
+                            if ($proc -and $proc.WaitForExit(5000)) {
+                                $output = $proc.StandardOutput.ReadToEnd()
+                                if ([string]::IsNullOrWhiteSpace($output)) { $output = $proc.StandardError.ReadToEnd() }
+                                if (-not [string]::IsNullOrWhiteSpace($output)) {
+                                    $ver = ($output -split "`r?`n")[0].Trim()
+                                    if ($ver.Length -gt 50) { $ver = $ver.Substring(0,50) + "..." }
+                                    $details = "v$ver"
+                                } else { $details = "Detected" }
+                            } else { $details = "Detected" }
+                        } catch { $details = "Detected" }
+                    } else {
+                        $details = "Detected"
+                    }
+                }
+            } catch { $isHealthy = $false }
+            
+            $results += [pscustomobject]@{
+                Component = $check.Component
+                Category = $check.Category
+                Status = if ($isHealthy) { "Healthy" } else { "Action Needed" }
+                Details = $details
+                Recommendation = if ($isHealthy) { "No action required." } else { "Install from the Tools tab." }
             }
-        }.GetNewClosure()
-        $script:lastHealthResults = $results
-        $script:lastHealthRun = Get-Date
-        if ($controls.txtStatus) { $controls.txtStatus.Text = "Silent health scan complete." }
+        }
         return $results
     }
     
-    if ($script:healthScanWorker -and $script:healthScanWorker.IsBusy) {
-        if ($controls.txtStatus) { $controls.txtStatus.Text = "Health scan already running..." }
-        return
-    }
+    $powershell.AddScript($script).AddArgument($scriptRoot) | Out-Null
+    $asyncResult = $powershell.BeginInvoke()
     
-    $content = $controls.mainContent.Content
-    $runButton = if ($content) { $content.FindName("btnRunHealthCheck") } else { $null }
-    $exportButton = if ($content) { $content.FindName("btnExportHealthReport") } else { $null }
+    # Use a timer to poll for completion without blocking UI
+    $timer = New-Object System.Windows.Threading.DispatcherTimer
+    $timer.Interval = [TimeSpan]::FromMilliseconds(200)
     
-    if ($runButton) { $runButton.IsEnabled = $false }
-    if ($exportButton) { $exportButton.IsEnabled = $false }
+    # Store references for the timer callback
+    $script:healthRunspace = $runspace
+    $script:healthPowershell = $powershell
+    $script:healthAsyncResult = $asyncResult
+    $script:healthSilent = $Silent
     
-    if ($controls.txtStatus) { $controls.txtStatus.Text = "Initializing health scan..." }
-    
-    if ($content) {
-        $txtSummary = $content.FindName("txtHealthSummary")
-        if ($txtSummary) { $txtSummary.Text = "Running diagnostics..." }
-        $txtIssues = $content.FindName("txtHealthIssues")
-        if ($txtIssues) { $txtIssues.Text = "Gathering results..." }
-        $txtScore = $content.FindName("txtHealthScore")
-        if ($txtScore) { $txtScore.Text = "--%" }
-    }
-    
-    $dispatcher = $window.Dispatcher
-    $progressCallback = {
-        param($component, $position, $total)
-        $dispatcher.Invoke([System.Action]{
-            if ($controls.txtStatus) {
-                $controls.txtStatus.Text = "Checking $component ($position/$total)..."
-            }
-        })
-    }.GetNewClosure()
-    
-    $worker = New-Object System.ComponentModel.BackgroundWorker
-    $worker.WorkerSupportsCancellation = $false
-    $worker.add_DoWork({
-        param($sender, $args)
-        $args.Result = Get-HealthCheckResults -OnProgress $progressCallback
-    }.GetNewClosure())
-    
-    $worker.add_RunWorkerCompleted({
-        param($sender, $args)
-        $dispatcher.Invoke([System.Action]{
-            if ($runButton) { $runButton.IsEnabled = $true }
-            if ($exportButton) { $exportButton.IsEnabled = $true }
-            $script:healthScanWorker = $null
+    $timer.Add_Tick({
+        if ($script:healthAsyncResult.IsCompleted) {
+            $this.Stop()
             
-            if ($args.Error) {
-                if ($controls.txtStatus) { $controls.txtStatus.Text = "Health scan failed." }
-                [System.Windows.MessageBox]::Show(
-                    "Health scan failed:`n$($args.Error.Message)",
-                    "Health Scan",
-                    [System.Windows.MessageBoxButton]::OK,
-                    [System.Windows.MessageBoxImage]::Error
-                ) | Out-Null
-                return
+            try {
+                $rawResults = $script:healthPowershell.EndInvoke($script:healthAsyncResult)
+                
+                # Convert results to new PSCustomObjects with IsSelected for checkbox binding
+                $results = @()
+                if ($rawResults -and $rawResults.Count -gt 0) {
+                    foreach ($r in $rawResults) {
+                        $isIssue = $r.Status -eq "Action Needed"
+                        $results += [PSCustomObject]@{
+                            Component = [string]$r.Component
+                            Category = [string]$r.Category
+                            Status = [string]$r.Status
+                            Details = [string]$r.Details
+                            Recommendation = [string]$r.Recommendation
+                            IsSelected = $isIssue  # Auto-select items with issues
+                        }
+                    }
+                }
+                
+                $script:lastHealthResults = $results
+                $script:lastHealthRun = Get-Date
+                
+                if (-not $script:healthSilent -and $script:currentPage -eq "Health") {
+                    Render-HealthResults -Results $results
+                }
+                
+                if ($controls.txtStatus) { $controls.txtStatus.Text = "Health scan complete." }
+            } catch {
+                if ($controls.txtStatus) { $controls.txtStatus.Text = "Health scan error." }
+            } finally {
+                # Cleanup
+                try { $script:healthPowershell.Dispose() } catch {}
+                try { $script:healthRunspace.Close(); $script:healthRunspace.Dispose() } catch {}
+                
+                # Re-enable buttons
+                if (-not $script:healthSilent) {
+                    $content = $controls.mainContent.Content
+                    $runButton = if ($content) { $content.FindName("btnRunHealthCheck") } else { $null }
+                    $exportButton = if ($content) { $content.FindName("btnExportHealthReport") } else { $null }
+                    if ($runButton) { $runButton.IsEnabled = $true }
+                    if ($exportButton) { $exportButton.IsEnabled = $true }
+                }
             }
-            
-            $results = if ($args.Result) { $args.Result } else { @() }
-            $script:lastHealthResults = $results
-            $script:lastHealthRun = Get-Date
-            if ($script:currentPage -eq "Health") {
-                Render-HealthResults -Results $results
-            }
-            if ($controls.txtStatus) { $controls.txtStatus.Text = "Health scan complete." }
-        })
-    }.GetNewClosure())
+        }
+    })
     
-    $script:healthScanWorker = $worker
-    $worker.RunWorkerAsync() | Out-Null
+    $timer.Start()
 }
 
 function Export-HealthReport {
@@ -335,6 +421,228 @@ function Export-HealthReport {
         [System.Windows.MessageBox]::Show("Failed to write report: $_", "Export Failed",
             [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Error) | Out-Null
     }
+}
+
+# Map component names to Chocolatey package names
+$script:componentToPackage = @{
+    "Node.js" = "nodejs"
+    "Python" = "python"
+    "Git" = "git"
+    "VS Code" = "vscode"
+    "Docker" = "docker-desktop"
+    "Angular CLI" = $null  # npm install
+    "Composer" = "composer"
+    "Azure CLI" = "azure-cli"
+    "AWS CLI" = "awscli"
+    "Terraform" = "terraform"
+    "kubectl" = "kubernetes-cli"
+    "Helm" = "kubernetes-helm"
+    "Go" = "golang"
+    "Rust/Cargo" = "rust"
+    "Java" = "openjdk"
+    "Maven" = "maven"
+    "Gradle" = "gradle"
+    ".NET SDK" = "dotnet-sdk"
+    "Ruby" = "ruby"
+}
+
+function Fix-AllHealthIssues {
+    if (-not $script:lastHealthResults -or $script:lastHealthResults.Count -eq 0) {
+        [System.Windows.MessageBox]::Show("Run a health scan first to detect issues.", "No Results",
+            [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
+        return
+    }
+    
+    $issues = $script:lastHealthResults | Where-Object { $_.Status -eq "Action Needed" }
+    if (-not $issues -or $issues.Count -eq 0) {
+        [System.Windows.MessageBox]::Show("No issues to fix - all checks are healthy!", "All Good",
+            [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information) | Out-Null
+        return
+    }
+    
+    $result = [System.Windows.MessageBox]::Show("Install $($issues.Count) missing tools?`n`n$($issues.Component -join ', ')", "Fix All Issues",
+        [System.Windows.MessageBoxButton]::YesNo, [System.Windows.MessageBoxImage]::Question)
+    
+    if ($result -ne [System.Windows.MessageBoxResult]::Yes) { return }
+    
+    Install-HealthIssues -Issues $issues
+}
+
+function Fix-SelectedHealthIssues {
+    if (-not $script:lastHealthResults -or $script:lastHealthResults.Count -eq 0) {
+        [System.Windows.MessageBox]::Show("Run a health scan first.", "No Results",
+            [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
+        return
+    }
+    
+    # Get items where checkbox is checked and status is Action Needed
+    $issues = @($script:lastHealthResults | Where-Object { $_.IsSelected -eq $true -and $_.Status -eq "Action Needed" })
+    
+    if ($issues.Count -eq 0) {
+        [System.Windows.MessageBox]::Show("No issues selected. Check the boxes next to items you want to fix.", "Nothing Selected",
+            [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
+        return
+    }
+    
+    Install-HealthIssues -Issues $issues
+}
+
+function Install-HealthIssues {
+    param([array]$Issues)
+    
+    if (-not $Issues -or $Issues.Count -eq 0) { return }
+    
+    # Disable buttons
+    $content = $controls.mainContent.Content
+    $runBtn = if ($content) { $content.FindName("btnRunHealthCheck") } else { $null }
+    $fixAllBtn = if ($content) { $content.FindName("btnFixAllIssues") } else { $null }
+    $fixSelBtn = if ($content) { $content.FindName("btnFixSelected") } else { $null }
+    $exportBtn = if ($content) { $content.FindName("btnExportHealthReport") } else { $null }
+    
+    if ($runBtn) { $runBtn.IsEnabled = $false }
+    if ($fixAllBtn) { $fixAllBtn.IsEnabled = $false }
+    if ($fixSelBtn) { $fixSelBtn.IsEnabled = $false }
+    if ($exportBtn) { $exportBtn.IsEnabled = $false }
+    
+    # Build package list
+    $packagesToInstall = @()
+    $componentNames = @()
+    foreach ($issue in $Issues) {
+        $package = $script:componentToPackage[$issue.Component]
+        if ($package) {
+            $packagesToInstall += $package
+            $componentNames += $issue.Component
+        }
+    }
+    
+    if ($packagesToInstall.Count -eq 0) {
+        $controls.txtStatus.Text = "No packages to install."
+        if ($runBtn) { $runBtn.IsEnabled = $true }
+        if ($fixAllBtn) { $fixAllBtn.IsEnabled = $true }
+        if ($fixSelBtn) { $fixSelBtn.IsEnabled = $true }
+        if ($exportBtn) { $exportBtn.IsEnabled = $true }
+        return
+    }
+    
+    $controls.txtStatus.Text = "Installing $($packagesToInstall.Count) tools..."
+    
+    # Get choco path from user settings
+    $chocoBasePath = Get-ChocolateyPath
+    $chocoPath = Join-Path $chocoBasePath "bin\choco.exe"
+    if (-not (Test-Path $chocoPath)) {
+        $chocoCmd = Get-Command choco -ErrorAction SilentlyContinue
+        if ($chocoCmd) { $chocoPath = $chocoCmd.Source }
+    }
+    
+    # Create runspace
+    $runspace = [runspacefactory]::CreateRunspace()
+    $runspace.ApartmentState = "STA"
+    $runspace.ThreadOptions = "ReuseThread"
+    $runspace.Open()
+    
+    $powershell = [powershell]::Create()
+    $powershell.Runspace = $runspace
+    
+    $script = {
+        param($ChocoPath, $PackageNames, $ComponentNames)
+        
+        $results = @{
+            Success = 0
+            Failed = @()
+        }
+        
+        for ($i = 0; $i -lt $PackageNames.Count; $i++) {
+            $pkgName = $PackageNames[$i]
+            $compName = $ComponentNames[$i]
+            try {
+                $psi = New-Object System.Diagnostics.ProcessStartInfo
+                $psi.FileName = $ChocoPath
+                $psi.Arguments = "install $pkgName -y --no-progress"
+                $psi.RedirectStandardOutput = $true
+                $psi.RedirectStandardError = $true
+                $psi.UseShellExecute = $false
+                $psi.CreateNoWindow = $true
+                
+                $proc = [System.Diagnostics.Process]::Start($psi)
+                if ($proc) {
+                    $proc.WaitForExit(300000)
+                    if ($proc.ExitCode -eq 0) {
+                        $results.Success++
+                    } else {
+                        $results.Failed += $compName
+                    }
+                } else {
+                    $results.Failed += $compName
+                }
+            } catch {
+                $results.Failed += $compName
+            }
+        }
+        
+        return $results
+    }
+    
+    $powershell.AddScript($script).AddArgument($chocoPath).AddArgument($packagesToInstall).AddArgument($componentNames) | Out-Null
+    $asyncResult = $powershell.BeginInvoke()
+    
+    # Store references
+    $script:fixRunspace = $runspace
+    $script:fixPowershell = $powershell
+    $script:fixAsyncResult = $asyncResult
+    $script:fixTotal = $packagesToInstall.Count
+    
+    # Timer to poll for completion
+    $timer = New-Object System.Windows.Threading.DispatcherTimer
+    $timer.Interval = [TimeSpan]::FromMilliseconds(500)
+    
+    $timer.Add_Tick({
+        if ($script:fixAsyncResult.IsCompleted) {
+            $this.Stop()
+            
+            $successCount = 0
+            $failedList = @()
+            
+            try {
+                $result = $script:fixPowershell.EndInvoke($script:fixAsyncResult)
+                if ($result -and $result.Count -gt 0) {
+                    $successCount = $result[0].Success
+                    $failedList = $result[0].Failed
+                }
+            } catch {
+                $failedList = @("Error during install")
+            } finally {
+                try { $script:fixPowershell.Dispose() } catch {}
+                try { $script:fixRunspace.Close(); $script:fixRunspace.Dispose() } catch {}
+            }
+            
+            $controls.txtStatus.Text = "Installed $successCount of $($script:fixTotal) tools."
+            
+            if ($failedList.Count -gt 0) {
+                [System.Windows.MessageBox]::Show("Failed to install:`n$($failedList -join ', ')`n`nInstalled: $successCount", "Partial Success",
+                    [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
+            } else {
+                [System.Windows.MessageBox]::Show("Successfully installed $successCount tools!", "Complete",
+                    [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information) | Out-Null
+            }
+            
+            # Re-enable buttons
+            $content = $controls.mainContent.Content
+            $runBtn = if ($content) { $content.FindName("btnRunHealthCheck") } else { $null }
+            $fixAllBtn = if ($content) { $content.FindName("btnFixAllIssues") } else { $null }
+            $fixSelBtn = if ($content) { $content.FindName("btnFixSelected") } else { $null }
+            $exportBtn = if ($content) { $content.FindName("btnExportHealthReport") } else { $null }
+            
+            if ($runBtn) { $runBtn.IsEnabled = $true }
+            if ($fixAllBtn) { $fixAllBtn.IsEnabled = $true }
+            if ($fixSelBtn) { $fixSelBtn.IsEnabled = $true }
+            if ($exportBtn) { $exportBtn.IsEnabled = $true }
+            
+            # Refresh health check
+            Invoke-HealthCheck
+        }
+    })
+    
+    $timer.Start()
 }
 
 function Get-ChocolateyUpdates {
@@ -376,6 +684,7 @@ function Render-UpdateResults {
     
     $list = $content.FindName("lvUpdates")
     if ($list) {
+        $list.ItemsSource = $null
         $list.ItemsSource = $Results
     }
     
@@ -403,19 +712,143 @@ function Invoke-UpdateCheck {
         return
     }
     
+    # Disable buttons
+    $content = $controls.mainContent.Content
+    $checkBtn = if ($content) { $content.FindName("btnCheckUpdates") } else { $null }
+    $installBtn = if ($content) { $content.FindName("btnInstallUpdates") } else { $null }
+    $exportBtn = if ($content) { $content.FindName("btnExportUpdates") } else { $null }
+    
+    if ($checkBtn) { $checkBtn.IsEnabled = $false }
+    if ($installBtn) { $installBtn.IsEnabled = $false }
+    if ($exportBtn) { $exportBtn.IsEnabled = $false }
+    
     $controls.txtStatus.Text = "Checking for Chocolatey updates..."
-    $script:lastUpdateResults = Get-ChocolateyUpdates
-    $script:lastUpdateRun = Get-Date
     
-    Render-UpdateResults -Results $script:lastUpdateResults
+    $summary = if ($content) { $content.FindName("txtUpdatesSummary") } else { $null }
+    if ($summary) { $summary.Text = "Scanning for updates..." }
     
-    if (-not $script:lastUpdateResults -or $script:lastUpdateResults.Count -eq 0) {
-        $controls.txtStatus.Text = "All packages are current."
-        [System.Windows.MessageBox]::Show("All tracked packages are already up to date.", "Updates",
-            [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information) | Out-Null
-    } else {
-        $controls.txtStatus.Text = "Updates available."
+    # Create runspace for background execution
+    $runspace = [runspacefactory]::CreateRunspace()
+    $runspace.ApartmentState = "STA"
+    $runspace.ThreadOptions = "ReuseThread"
+    $runspace.Open()
+    
+    # Get choco path from user settings
+    $chocoBasePath = Get-ChocolateyPath
+    $chocoPath = Join-Path $chocoBasePath "bin\choco.exe"
+    if (-not (Test-Path $chocoPath)) {
+        $chocoPath = (Get-Command choco -ErrorAction SilentlyContinue).Source
     }
+    $runspace.SessionStateProxy.SetVariable("ChocoPath", $chocoPath)
+    
+    $powershell = [powershell]::Create()
+    $powershell.Runspace = $runspace
+    
+    $script = {
+        param($ChocoPath)
+        $updates = @()
+        try {
+            $psi = New-Object System.Diagnostics.ProcessStartInfo
+            $psi.FileName = $ChocoPath
+            $psi.Arguments = "outdated --limit-output"
+            $psi.RedirectStandardOutput = $true
+            $psi.RedirectStandardError = $true
+            $psi.UseShellExecute = $false
+            $psi.CreateNoWindow = $true
+            
+            $proc = [System.Diagnostics.Process]::Start($psi)
+            if ($proc) {
+                $output = $proc.StandardOutput.ReadToEnd()
+                $proc.WaitForExit(60000)
+                
+                foreach ($line in ($output -split "`r?`n")) {
+                    if (-not $line -or $line.StartsWith("Chocolatey")) { continue }
+                    if ($line -match "^([^|]+)\|([^|]+)\|([^|]+)") {
+                        $package = $matches[1]
+                        $current = $matches[2]
+                        $available = $matches[3]
+                        $updates += [pscustomobject]@{
+                            Tool = $package
+                            Package = $package
+                            CurrentVersion = $current
+                            AvailableVersion = $available
+                            Source = "Chocolatey"
+                        }
+                    }
+                }
+            }
+        } catch {}
+        return $updates
+    }
+    
+    $powershell.AddScript($script).AddArgument($chocoPath) | Out-Null
+    $asyncResult = $powershell.BeginInvoke()
+    
+    # Store references for timer
+    $script:updateRunspace = $runspace
+    $script:updatePowershell = $powershell
+    $script:updateAsyncResult = $asyncResult
+    
+    $timer = New-Object System.Windows.Threading.DispatcherTimer
+    $timer.Interval = [TimeSpan]::FromMilliseconds(200)
+    
+    $timer.Add_Tick({
+        if ($script:updateAsyncResult.IsCompleted) {
+            $this.Stop()
+            
+            try {
+                $rawResults = $script:updatePowershell.EndInvoke($script:updateAsyncResult)
+                
+                # Convert results to new PSCustomObjects in UI thread for proper WPF binding
+                $results = @()
+                if ($rawResults -and $rawResults.Count -gt 0) {
+                    foreach ($r in $rawResults) {
+                        $results += [PSCustomObject]@{
+                            Package = [string]$r.Package
+                            CurrentVersion = [string]$r.CurrentVersion
+                            AvailableVersion = [string]$r.AvailableVersion
+                            Source = [string]$r.Source
+                            IsSelected = $true
+                        }
+                    }
+                }
+                
+                $script:lastUpdateResults = $results
+                $script:lastUpdateRun = Get-Date
+                
+                if ($script:currentPage -eq "Update") {
+                    Render-UpdateResults -Results $results
+                }
+                
+                if (-not $results -or $results.Count -eq 0) {
+                    $controls.txtStatus.Text = "All packages are current."
+                } else {
+                    $controls.txtStatus.Text = "$($results.Count) updates available."
+                }
+            } catch {
+                $controls.txtStatus.Text = "Update check failed."
+            } finally {
+                try { $script:updatePowershell.Dispose() } catch {}
+                try { $script:updateRunspace.Close(); $script:updateRunspace.Dispose() } catch {}
+                
+                # Re-enable buttons
+                $content = $controls.mainContent.Content
+                $checkBtn = if ($content) { $content.FindName("btnCheckUpdates") } else { $null }
+                $selectAllBtn = if ($content) { $content.FindName("btnSelectAllUpdates") } else { $null }
+                $installBtn = if ($content) { $content.FindName("btnUpdateSelected") } else { $null }
+                $updateAllBtn = if ($content) { $content.FindName("btnUpdateAll") } else { $null }
+                $exportBtn = if ($content) { $content.FindName("btnExportUpdateReport") } else { $null }
+                
+                if ($checkBtn) { $checkBtn.IsEnabled = $true }
+                if ($selectAllBtn) { $selectAllBtn.IsEnabled = $true }
+                if ($installBtn) { $installBtn.IsEnabled = $true }
+                if ($updateAllBtn) { $updateAllBtn.IsEnabled = $true }
+                if ($exportBtn) { $exportBtn.IsEnabled = $true }
+            }
+        }
+    })
+    
+    $timer.Start()
 }
 
 function Export-UpdateReport {
@@ -435,30 +868,199 @@ function Export-UpdateReport {
 }
 
 function Install-SelectedUpdates {
-    $content = $controls.mainContent.Content
-    if (-not $content) { return }
-    
-    $list = $content.FindName("lvUpdates")
-    if (-not $list -or $list.SelectedItems.Count -eq 0) {
-        [System.Windows.MessageBox]::Show("Select one or more packages from the list first.", "Nothing Selected",
+    if (-not $script:lastUpdateResults -or $script:lastUpdateResults.Count -eq 0) {
+        [System.Windows.MessageBox]::Show("No updates available. Click 'Check for Updates' first.", "No Updates",
             [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
         return
     }
     
-    $packages = @()
-    foreach ($item in $list.SelectedItems) {
-        $packages += $item
+    # Get items where checkbox is checked
+    $packages = @($script:lastUpdateResults | Where-Object { $_.IsSelected -eq $true })
+    
+    if ($packages.Count -eq 0) {
+        [System.Windows.MessageBox]::Show("No packages selected. Check the boxes next to items you want to update.", "Nothing Selected",
+            [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
+        return
     }
     
-    $total = $packages.Count
-    $current = 0
-    foreach ($pkg in $packages) {
-        $current++
-        $controls.txtStatus.Text = "Updating $($pkg.Package) ($current/$total)..."
-        Update-ChocoPackage -PackageName $pkg.Package | Out-Null
+    Install-UpdatePackages -Packages $packages
+}
+
+function Select-AllUpdates {
+    if (-not $script:lastUpdateResults -or $script:lastUpdateResults.Count -eq 0) {
+        [System.Windows.MessageBox]::Show("No updates available. Click 'Check for Updates' first.", "No Updates",
+            [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information) | Out-Null
+        return
     }
     
-    $controls.txtStatus.Text = "Updates installed."
-    Invoke-UpdateCheck
+    # Set all items as selected
+    foreach ($item in $script:lastUpdateResults) {
+        $item.IsSelected = $true
+    }
+    
+    # Refresh the list
+    Render-UpdateResults -Results $script:lastUpdateResults
+    $controls.txtStatus.Text = "Selected all $($script:lastUpdateResults.Count) packages."
+}
+
+function Install-AllUpdates {
+    if (-not $script:lastUpdateResults -or $script:lastUpdateResults.Count -eq 0) {
+        [System.Windows.MessageBox]::Show("No updates available. Click 'Check for Updates' first.", "No Updates",
+            [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information) | Out-Null
+        return
+    }
+    
+    $result = [System.Windows.MessageBox]::Show("Update all $($script:lastUpdateResults.Count) packages?", "Update All",
+        [System.Windows.MessageBoxButton]::YesNo, [System.Windows.MessageBoxImage]::Question)
+    
+    if ($result -ne [System.Windows.MessageBoxResult]::Yes) { return }
+    
+    Install-UpdatePackages -Packages $script:lastUpdateResults
+}
+
+function Install-UpdatePackages {
+    param([array]$Packages)
+    
+    if (-not $Packages -or $Packages.Count -eq 0) { return }
+    
+    # Disable buttons
+    $content = $controls.mainContent.Content
+    $checkBtn = if ($content) { $content.FindName("btnCheckUpdates") } else { $null }
+    $selectAllBtn = if ($content) { $content.FindName("btnSelectAllUpdates") } else { $null }
+    $updateSelBtn = if ($content) { $content.FindName("btnUpdateSelected") } else { $null }
+    $updateAllBtn = if ($content) { $content.FindName("btnUpdateAll") } else { $null }
+    $exportBtn = if ($content) { $content.FindName("btnExportUpdateReport") } else { $null }
+    
+    if ($checkBtn) { $checkBtn.IsEnabled = $false }
+    if ($selectAllBtn) { $selectAllBtn.IsEnabled = $false }
+    if ($updateSelBtn) { $updateSelBtn.IsEnabled = $false }
+    if ($updateAllBtn) { $updateAllBtn.IsEnabled = $false }
+    if ($exportBtn) { $exportBtn.IsEnabled = $false }
+    
+    $controls.txtStatus.Text = "Updating $($Packages.Count) packages..."
+    
+    # Build package list as simple strings
+    $packageNames = @()
+    foreach ($pkg in $Packages) {
+        $packageNames += [string]$pkg.Package
+    }
+    
+    # Get choco path from user settings
+    $chocoBasePath = Get-ChocolateyPath
+    $chocoPath = Join-Path $chocoBasePath "bin\choco.exe"
+    if (-not (Test-Path $chocoPath)) {
+        $chocoCmd = Get-Command choco -ErrorAction SilentlyContinue
+        if ($chocoCmd) { $chocoPath = $chocoCmd.Source }
+    }
+    
+    # Create runspace
+    $runspace = [runspacefactory]::CreateRunspace()
+    $runspace.ApartmentState = "STA"
+    $runspace.ThreadOptions = "ReuseThread"
+    $runspace.Open()
+    
+    $powershell = [powershell]::Create()
+    $powershell.Runspace = $runspace
+    
+    $script = {
+        param($ChocoPath, $PackageNames)
+        
+        $results = @{
+            Success = 0
+            Failed = @()
+        }
+        
+        foreach ($pkgName in $PackageNames) {
+            try {
+                $psi = New-Object System.Diagnostics.ProcessStartInfo
+                $psi.FileName = $ChocoPath
+                $psi.Arguments = "upgrade $pkgName -y --no-progress"
+                $psi.RedirectStandardOutput = $true
+                $psi.RedirectStandardError = $true
+                $psi.UseShellExecute = $false
+                $psi.CreateNoWindow = $true
+                
+                $proc = [System.Diagnostics.Process]::Start($psi)
+                if ($proc) {
+                    $proc.WaitForExit(300000)
+                    if ($proc.ExitCode -eq 0) {
+                        $results.Success++
+                    } else {
+                        $results.Failed += $pkgName
+                    }
+                } else {
+                    $results.Failed += $pkgName
+                }
+            } catch {
+                $results.Failed += $pkgName
+            }
+        }
+        
+        return $results
+    }
+    
+    $powershell.AddScript($script).AddArgument($chocoPath).AddArgument($packageNames) | Out-Null
+    $asyncResult = $powershell.BeginInvoke()
+    
+    # Store references
+    $script:pkgUpdateRunspace = $runspace
+    $script:pkgUpdatePowershell = $powershell
+    $script:pkgUpdateAsyncResult = $asyncResult
+    $script:pkgUpdateTotal = $packageNames.Count
+    
+    # Timer to poll for completion
+    $timer = New-Object System.Windows.Threading.DispatcherTimer
+    $timer.Interval = [TimeSpan]::FromMilliseconds(500)
+    
+    $timer.Add_Tick({
+        if ($script:pkgUpdateAsyncResult.IsCompleted) {
+            $this.Stop()
+            
+            $successCount = 0
+            $failedList = @()
+            
+            try {
+                $result = $script:pkgUpdatePowershell.EndInvoke($script:pkgUpdateAsyncResult)
+                if ($result -and $result.Count -gt 0) {
+                    $successCount = $result[0].Success
+                    $failedList = $result[0].Failed
+                }
+            } catch {
+                $failedList = @("Error during update")
+            } finally {
+                try { $script:pkgUpdatePowershell.Dispose() } catch {}
+                try { $script:pkgUpdateRunspace.Close(); $script:pkgUpdateRunspace.Dispose() } catch {}
+            }
+            
+            $controls.txtStatus.Text = "Updated $successCount of $($script:pkgUpdateTotal) packages."
+            
+            if ($failedList.Count -gt 0) {
+                [System.Windows.MessageBox]::Show("Failed to update:`n$($failedList -join ', ')`n`nUpdated: $successCount", "Partial Success",
+                    [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
+            } else {
+                [System.Windows.MessageBox]::Show("Successfully updated $successCount packages!", "Complete",
+                    [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Information) | Out-Null
+            }
+            
+            # Re-enable buttons and refresh
+            $content = $controls.mainContent.Content
+            $checkBtn = if ($content) { $content.FindName("btnCheckUpdates") } else { $null }
+            $selectAllBtn = if ($content) { $content.FindName("btnSelectAllUpdates") } else { $null }
+            $updateSelBtn = if ($content) { $content.FindName("btnUpdateSelected") } else { $null }
+            $updateAllBtn = if ($content) { $content.FindName("btnUpdateAll") } else { $null }
+            $exportBtn = if ($content) { $content.FindName("btnExportUpdateReport") } else { $null }
+            
+            if ($checkBtn) { $checkBtn.IsEnabled = $true }
+            if ($selectAllBtn) { $selectAllBtn.IsEnabled = $true }
+            if ($updateSelBtn) { $updateSelBtn.IsEnabled = $true }
+            if ($updateAllBtn) { $updateAllBtn.IsEnabled = $true }
+            if ($exportBtn) { $exportBtn.IsEnabled = $true }
+            
+            # Refresh update list
+            Invoke-UpdateCheck
+        }
+    })
+    
+    $timer.Start()
 }
 

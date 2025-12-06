@@ -221,3 +221,146 @@
 2025-12-06 15:30:14 [SUCCESS] 7Zip uninstall completed (UI confirmation)
 2025-12-06 15:33:16 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
 2025-12-06 15:33:36 [SUCCESS] 7Zip verified as installed.
+2025-12-06 15:44:18 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 15:44:18 [ERROR] Unhandled error: At C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\Navigation.Routing.ps1:212 char:1
++ }
++ ~
+Unexpected token '}' in expression or statement.
+2025-12-06 15:44:18 [ERROR] Unhandled error: The term 'Load-Page' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-12-06 15:44:18 [ERROR] Unhandled error: The term 'Load-Page' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+2025-12-06 15:45:40 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:18:25 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:22:29 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:25:17 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:28:27 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:32:08 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:32:16 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-12-06 16:39:29 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:40:03 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:40:09 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-12-06 16:42:24 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:42:47 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-12-06 16:45:05 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:45:11 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-12-06 16:48:42 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:49:00 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:53:17 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:54:47 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 16:55:11 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 17:05:33 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 17:05:47 [INFO] Installing terraform via Chocolatey
+2025-12-06 17:05:47 [INFO] Running: choco install terraform -y --no-progress --limit-output 
+2025-12-06 17:05:56 [INFO] Chocolatey exit code for terraform : 0
+2025-12-06 17:05:58 [SUCCESS] terraform verified in lib folder (found: terraform)
+2025-12-06 17:05:58 [SUCCESS] terraform installed successfully via Chocolatey
+2025-12-06 17:05:58 [INFO] Installing kubernetes-helm via Chocolatey
+2025-12-06 17:05:58 [INFO] Running: choco install kubernetes-helm -y --no-progress --limit-output 
+2025-12-06 17:06:07 [INFO] Chocolatey exit code for kubernetes-helm : 0
+2025-12-06 17:06:09 [SUCCESS] kubernetes-helm verified in lib folder (found: kubernetes-helm)
+2025-12-06 17:06:09 [SUCCESS] kubernetes-helm installed successfully via Chocolatey
+2025-12-06 17:06:09 [INFO] Installing golang via Chocolatey
+2025-12-06 17:06:09 [INFO] Running: choco install golang -y --no-progress --limit-output 
+2025-12-06 17:06:57 [INFO] Chocolatey exit code for golang : 0
+2025-12-06 17:06:59 [SUCCESS] golang verified in lib folder (found: golang)
+2025-12-06 17:06:59 [SUCCESS] golang installed successfully via Chocolatey
+2025-12-06 17:06:59 [INFO] Installing rust via Chocolatey
+2025-12-06 17:06:59 [INFO] Running: choco install rust -y --no-progress --limit-output 
+2025-12-06 17:08:20 [INFO] Chocolatey exit code for rust : 0
+2025-12-06 17:08:22 [SUCCESS] rust verified in lib folder (found: rust)
+2025-12-06 17:08:22 [SUCCESS] rust installed successfully via Chocolatey
+2025-12-06 17:08:22 [INFO] Installing openjdk via Chocolatey
+2025-12-06 17:08:22 [INFO] Running: choco install openjdk -y --no-progress --limit-output 
+2025-12-06 17:08:52 [INFO] Chocolatey exit code for openjdk : 0
+2025-12-06 17:08:54 [SUCCESS] openjdk verified in lib folder (found: openjdk)
+2025-12-06 17:08:54 [SUCCESS] openjdk installed successfully via Chocolatey
+2025-12-06 17:08:54 [INFO] Installing maven via Chocolatey
+2025-12-06 17:08:54 [INFO] Running: choco install maven -y --no-progress --limit-output 
+2025-12-06 17:09:03 [INFO] Chocolatey exit code for maven : 0
+2025-12-06 17:09:05 [SUCCESS] maven verified in lib folder (found: maven)
+2025-12-06 17:09:05 [SUCCESS] maven installed successfully via Chocolatey
+2025-12-06 17:09:05 [INFO] Installing gradle via Chocolatey
+2025-12-06 17:09:05 [INFO] Running: choco install gradle -y --no-progress --limit-output 
+2025-12-06 17:15:42 [INFO] Chocolatey exit code for gradle : 0
+2025-12-06 17:15:44 [SUCCESS] gradle verified in lib folder (found: gradle)
+2025-12-06 17:15:44 [SUCCESS] gradle installed successfully via Chocolatey
+2025-12-06 17:15:44 [INFO] Installing ruby via Chocolatey
+2025-12-06 17:15:44 [INFO] Running: choco install ruby -y --no-progress --limit-output 
+2025-12-06 17:16:20 [INFO] Chocolatey exit code for ruby : 0
+2025-12-06 17:16:22 [SUCCESS] ruby verified in lib folder (found: ruby)
+2025-12-06 17:16:22 [SUCCESS] ruby installed successfully via Chocolatey
+2025-12-06 17:27:41 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 17:32:40 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 17:34:35 [INFO] Postman is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] Chrome is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] GitHubCLI is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] MySQLWorkbench is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] MongoDBCompass is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] DBeaver is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] PgAdmin is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] Redis is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] IntelliJ is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] PyCharm is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] AndroidStudio is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] Sublime is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] NotepadPP is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] Slack is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] Insomnia is not installed. Skipping uninstall.
+2025-12-06 17:34:35 [INFO] Skipping not installed: Postman, Chrome, GitHubCLI, MySQLWorkbench, MongoDBCompass, DBeaver, PgAdmin, Redis, IntelliJ, PyCharm, AndroidStudio, Sublime, NotepadPP, Slack, Insomnia
+2025-12-06 17:34:42 [INFO] Uninstalling docker-desktop via Chocolatey
+2025-12-06 17:34:42 [INFO] Found docker-desktop at: C:\Apps\Chocolatey\lib\docker-desktop
+2025-12-06 17:34:42 [INFO] Running: choco uninstall docker-desktop -y --no-progress
+2025-12-06 17:35:29 [INFO] Chocolatey uninstall exit code for docker-desktop : 0
+2025-12-06 17:35:31 [SUCCESS] docker-desktop uninstalled successfully via Chocolatey
+2025-12-06 17:35:31 [SUCCESS] Docker uninstalled successfully
+2025-12-06 17:35:32 [INFO] Uninstalling 7zip via Chocolatey
+2025-12-06 17:35:32 [INFO] Found 7zip at: C:\Apps\Chocolatey\lib\7zip
+2025-12-06 17:35:32 [INFO] Running: choco uninstall 7zip -y --no-progress
+2025-12-06 17:35:44 [INFO] Chocolatey uninstall exit code for 7zip : 0
+2025-12-06 17:35:46 [SUCCESS] 7zip uninstalled successfully via Chocolatey
+2025-12-06 17:35:46 [SUCCESS] 7Zip uninstalled successfully
+2025-12-06 17:35:46 [INFO] Uninstalling azure-cli via Chocolatey
+2025-12-06 17:35:46 [INFO] Found azure-cli at: C:\Apps\Chocolatey\lib\azure-cli
+2025-12-06 17:35:46 [INFO] Running: choco uninstall azure-cli -y --no-progress
+2025-12-06 17:36:46 [INFO] Chocolatey uninstall exit code for azure-cli : 0
+2025-12-06 17:36:48 [SUCCESS] azure-cli uninstalled successfully via Chocolatey
+2025-12-06 17:36:48 [SUCCESS] AzureCLI uninstalled successfully
+2025-12-06 17:36:48 [INFO] Uninstalling awscli via Chocolatey
+2025-12-06 17:36:48 [INFO] Found awscli at: C:\Apps\Chocolatey\lib\awscli
+2025-12-06 17:36:48 [INFO] Running: choco uninstall awscli -y --no-progress
+2025-12-06 17:37:27 [INFO] Chocolatey uninstall exit code for awscli : 0
+2025-12-06 17:37:29 [SUCCESS] awscli uninstalled successfully via Chocolatey
+2025-12-06 17:37:30 [SUCCESS] AWSCLI uninstalled successfully
+2025-12-06 17:37:30 [INFO] Uninstalling terraform via Chocolatey
+2025-12-06 17:37:30 [INFO] Found terraform at: C:\Apps\Chocolatey\lib\terraform
+2025-12-06 17:37:30 [INFO] Running: choco uninstall terraform -y --no-progress
+2025-12-06 17:37:36 [INFO] Chocolatey uninstall exit code for terraform : 0
+2025-12-06 17:37:38 [SUCCESS] terraform uninstalled successfully via Chocolatey
+2025-12-06 17:37:39 [SUCCESS] Terraform uninstalled successfully
+2025-12-06 17:37:39 [INFO] Uninstalling kubernetes-cli via Chocolatey
+2025-12-06 17:37:39 [INFO] kubernetes-cli is not installed via Chocolatey. Nothing to uninstall.
+2025-12-06 17:37:39 [SUCCESS] Kubectl uninstalled successfully
+2025-12-06 17:37:39 [INFO] Uninstalling github-desktop via Chocolatey
+2025-12-06 17:37:40 [INFO] Found github-desktop at: C:\Apps\Chocolatey\lib\github-desktop
+2025-12-06 17:37:40 [INFO] Running: choco uninstall github-desktop -y --no-progress
+2025-12-06 17:37:50 [INFO] Chocolatey uninstall exit code for github-desktop : 0
+2025-12-06 17:37:52 [SUCCESS] github-desktop uninstalled successfully via Chocolatey
+2025-12-06 17:37:52 [SUCCESS] GitHubDesktop uninstalled successfully
+2025-12-06 17:37:52 [INFO] Uninstalling microsoft-windows-terminal via Chocolatey
+2025-12-06 17:37:52 [INFO] microsoft-windows-terminal is not installed via Chocolatey. Nothing to uninstall.
+2025-12-06 17:37:52 [SUCCESS] WindowsTerminal uninstalled successfully
+2025-12-06 17:37:53 [INFO] Uninstalling powertoys via Chocolatey
+2025-12-06 17:37:53 [INFO] Found powertoys at: C:\Apps\Chocolatey\lib\powertoys
+2025-12-06 17:37:53 [INFO] Running: choco uninstall powertoys -y --no-progress
+2025-12-06 17:43:54 [INFO] Chocolatey uninstall exit code for powertoys : 0
+2025-12-06 17:43:56 [SUCCESS] powertoys uninstalled successfully via Chocolatey
+2025-12-06 17:43:56 [SUCCESS] PowerToys uninstalled successfully
+2025-12-06 17:44:47 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 17:45:16 [INFO] Updating anydesk.portable via Chocolatey
+2025-12-06 17:45:32 [SUCCESS] anydesk.portable upgraded successfully via Chocolatey
+2025-12-06 17:45:32 [INFO] Updating chocolatey via Chocolatey
+2025-12-06 17:45:45 [SUCCESS] chocolatey upgraded successfully via Chocolatey
+2025-12-06 17:45:45 [INFO] Updating postgresql18 via Chocolatey
+2025-12-06 17:49:09 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 18:01:26 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log
+2025-12-06 18:01:58 [ERROR] Unhandled error: You cannot call a method on a null-valued expression.
+2025-12-06 18:34:37 [INFO] Error capture enabled. Transcript: C:\Users\S P A R O\Desktop\PS1 SCRIPTS\DevToolsInstaller\src\Parts\..\\Logs\runtime_errors_2025-12-06.log

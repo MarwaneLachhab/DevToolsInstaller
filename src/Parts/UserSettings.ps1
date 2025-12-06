@@ -44,10 +44,20 @@ function Ensure-DownloadPath {
 function Get-DefaultUserSettings {
     return [pscustomobject]@{
         DownloadPath = $script:defaultDownloadPath
+        ChocolateyPath = "C:\Apps\Chocolatey"
         AutoRunHealthAfterInstall = $true
         AutoCheckUpdates = $false
         PreferredTheme = "Dark"
     }
+}
+
+function Get-ChocolateyPath {
+    Ensure-UserSettingsProperties
+    $path = Get-UserSettingValue -Name "ChocolateyPath" -Default "C:\Apps\Chocolatey"
+    if ([string]::IsNullOrWhiteSpace($path)) {
+        $path = "C:\Apps\Chocolatey"
+    }
+    return $path
 }
 
 function Ensure-UserSettingsProperties {

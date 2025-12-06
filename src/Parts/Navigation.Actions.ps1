@@ -243,6 +243,21 @@ function Set-ActionBar {
             $btnInstallExt.Add_Click({ Install-SelectedExtensions })
             $controls.actionBarContent.Children.Add($btnInstallExt) | Out-Null
             
+            # Uninstall Selected Extensions button
+            $btnUninstallExt = New-Object System.Windows.Controls.Button
+            $btnUninstallExt.Background = "#FFDC143C"  # Crimson red
+            $btnUninstallExt.Foreground = "White"
+            $btnUninstallExt.Padding = "20,10"
+            $btnUninstallExt.FontSize = 14
+            $btnUninstallExt.FontWeight = "SemiBold"
+            $btnUninstallExt.BorderThickness = 0
+            $btnUninstallExt.Cursor = "Hand"
+            $btnUninstallExt.Width = 260
+            $btnUninstallExt.Margin = "5"
+            Set-EmojiContent -Control $btnUninstallExt -Emoji (Get-CodepointString 0x1F5D1) -Text "Uninstall Selected Extensions"
+            $btnUninstallExt.Add_Click({ Uninstall-SelectedExtensions })
+            $controls.actionBarContent.Children.Add($btnUninstallExt) | Out-Null
+            
             $btnSelectAll = New-Object System.Windows.Controls.Button
             $btnSelectAll.Background = $accentColor
             $btnSelectAll.Foreground = "White"
@@ -623,6 +638,7 @@ function Get-MissingInstalledTools {
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
     Refresh-ChocoPackageCache -Force
     
+    
     foreach ($tool in $Tools) {
         try {
             $isInstalled = Test-ToolInstalled -ToolName $tool -ForceCheck
@@ -639,4 +655,16 @@ function Get-MissingInstalledTools {
         }
     }
     return $missing
+}
+
+# Stub function for Uninstall-SelectedExtensions if not defined elsewhere
+if (-not (Get-Command Uninstall-SelectedExtensions -ErrorAction SilentlyContinue)) {
+    function Uninstall-SelectedExtensions {
+        [System.Windows.MessageBox]::Show(
+            "Extension uninstall feature is not available. Please update the application.",
+            "Feature Not Available",
+            [System.Windows.MessageBoxButton]::OK,
+            [System.Windows.MessageBoxImage]::Information
+        ) | Out-Null
+    }
 }

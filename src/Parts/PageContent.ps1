@@ -234,6 +234,7 @@ function Get-ExtensionsPageContent {
     $textColor = if ($script:currentTheme -eq "Dark") { "White" } else { "Black" }
     $textSecondary = if ($script:currentTheme -eq "Dark") { "#B0B0B0" } else { "#666666" }
     $accentColor = "#007ACC"
+    $installedColor = "#28A745"
     
     $xaml = @"
 <StackPanel xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -241,7 +242,7 @@ function Get-ExtensionsPageContent {
             TextElement.FontFamily="Segoe UI, Segoe UI Emoji, Segoe UI Symbol"
             Margin="20">
     <TextBlock Text="VS Code Extensions" FontSize="18" FontWeight="Bold" Foreground="$textColor" Margin="0,0,0,10"/>
-    <TextBlock Text="Popular extensions to enhance your VS Code experience (22 extensions)" FontSize="12" 
+    <TextBlock Text="Popular extensions to enhance your VS Code experience ($($extensions.Count) extensions)" FontSize="12" 
               Foreground="$textSecondary" Margin="0,0,0,20" TextWrapping="Wrap"/>
     
     <Border Background="$bgColor" Padding="15" Margin="0,0,0,15" CornerRadius="5">
@@ -250,10 +251,15 @@ function Get-ExtensionsPageContent {
     
     foreach ($ext in $extensions) {
         $xaml += @"
-            <CheckBox x:Name="chkExt_$($ext.Id.Replace('.', '_').Replace('-', '_'))" Foreground="$textColor" FontSize="13" Margin="0,5" IsChecked="True">
-                <StackPanel>
-                    <TextBlock Text="$($ext.Name)" FontWeight="Bold"/>
-                    <TextBlock Text="$($ext.Description)" FontSize="11" Foreground="$textSecondary" TextWrapping="Wrap" Margin="0,2,0,0"/>
+            <CheckBox x:Name="chkExt_$($ext.Id.Replace('.', '_').Replace('-', '_'))" Foreground="$textColor" FontSize="13" Margin="0,5" IsChecked="False">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="$($ext.Name)" FontWeight="Bold"/>
+                            <TextBlock x:Name="txtExtStatus_$($ext.Id.Replace('.', '_').Replace('-', '_'))" Text="" FontSize="11" Foreground="$installedColor" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <TextBlock Text="$($ext.Description)" FontSize="11" Foreground="$textSecondary" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                    </StackPanel>
                 </StackPanel>
             </CheckBox>
 "@
@@ -327,18 +333,31 @@ function Get-HealthPageContent {
         <StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="btnRunHealthCheck" Style="{StaticResource PrimaryButtonStyle}" Content="Run Health Scan"/>
+                <Button x:Name="btnFixAllIssues" Style="{StaticResource PrimaryButtonStyle}" Content="Fix All Issues"/>
                 <Button x:Name="btnExportHealthReport" Style="{StaticResource PrimaryButtonStyle}" Content="Export Report"/>
             </StackPanel>
             <ListView x:Name="lvHealthResults" Margin="0,15,0,0">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Component" DisplayMemberBinding="{Binding Component}" Width="220"/>
-                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="110"/>
-                        <GridViewColumn Header="Details" DisplayMemberBinding="{Binding Details}" Width="280"/>
-                        <GridViewColumn Header="Recommendation" DisplayMemberBinding="{Binding Recommendation}" Width="280"/>
+                        <GridViewColumn Width="40">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalAlignment="Center"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Component" DisplayMemberBinding="{Binding Component}" Width="160"/>
+                        <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="100"/>
+                        <GridViewColumn Header="Status" DisplayMemberBinding="{Binding Status}" Width="100"/>
+                        <GridViewColumn Header="Details" DisplayMemberBinding="{Binding Details}" Width="200"/>
                     </GridView>
                 </ListView.View>
             </ListView>
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                <Button x:Name="btnFixSelected" Style="{StaticResource PrimaryButtonStyle}" Content="Fix Selected"/>
+            </StackPanel>
+            <TextBlock Text="Tip: Select items with issues and click 'Fix Selected' to install missing tools, or use 'Fix All Issues' to install all missing tools at once."
+                      FontSize="11" Foreground="$textSecondary" Margin="0,10,0,0" TextWrapping="Wrap"/>
         </StackPanel>
     </Border>
 </StackPanel>
@@ -388,26 +407,34 @@ function Get-UpdatePageContent {
     
     <StackPanel Orientation="Horizontal">
         <Button x:Name="btnCheckUpdates" Style="{StaticResource PrimaryButtonStyle}" Content="Check for Updates"/>
+        <Button x:Name="btnSelectAllUpdates" Style="{StaticResource PrimaryButtonStyle}" Content="Select All"/>
         <Button x:Name="btnUpdateSelected" Style="{StaticResource PrimaryButtonStyle}" Content="Update Selected"/>
+        <Button x:Name="btnUpdateAll" Style="{StaticResource PrimaryButtonStyle}" Content="Update All"/>
         <Button x:Name="btnExportUpdateReport" Style="{StaticResource PrimaryButtonStyle}" Content="Export Report"/>
     </StackPanel>
     
     <Border Background="$bgColor" Padding="15" CornerRadius="5" Margin="0,15,0,0">
-        <ListView x:Name="lvUpdates" SelectionMode="Extended">
+        <ListView x:Name="lvUpdates">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Tool" DisplayMemberBinding="{Binding Tool}" Width="220"/>
-                    <GridViewColumn Header="Package" DisplayMemberBinding="{Binding Package}" Width="150"/>
+                    <GridViewColumn Width="40">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" HorizontalAlignment="Center"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Package" DisplayMemberBinding="{Binding Package}" Width="180"/>
                     <GridViewColumn Header="Installed" DisplayMemberBinding="{Binding CurrentVersion}" Width="120"/>
-                    <GridViewColumn Header="Latest" DisplayMemberBinding="{Binding AvailableVersion}" Width="120"/>
-                    <GridViewColumn Header="Source" DisplayMemberBinding="{Binding Source}" Width="100"/>
+                    <GridViewColumn Header="Available" DisplayMemberBinding="{Binding AvailableVersion}" Width="120"/>
+                    <GridViewColumn Header="Source" DisplayMemberBinding="{Binding Source}" Width="90"/>
                 </GridView>
             </ListView.View>
         </ListView>
     </Border>
     
-    <TextBlock Text="Tip: Hold Ctrl or Shift to select multiple packages before clicking 'Update Selected'."
-              FontSize="11" Foreground="$textSecondary" Margin="0,10,0,0"/>
+    <TextBlock Text="Tip: Click 'Check for Updates' to scan, then use 'Update All' or select specific packages and click 'Update Selected'."
+              FontSize="11" Foreground="$textSecondary" Margin="0,10,0,0" TextWrapping="Wrap"/>
 </StackPanel>
 "@
     return $xaml
@@ -454,6 +481,17 @@ function Get-SettingsPageContent {
                 <Button x:Name="btnBrowseDownloadPath" Style="{StaticResource PrimaryButtonStyle}" Content="Browse..." Width="140"/>
             </DockPanel>
             <TextBlock Text="All installers will be cached in this folder." FontSize="11" Foreground="$textSecondary" Margin="0,5,0,0"/>
+        </StackPanel>
+    </Border>
+    
+    <Border Background="$bgColor" Padding="20" CornerRadius="5" Margin="0,0,0,15">
+        <StackPanel>
+            <TextBlock Text="Chocolatey Install Path" FontSize="14" FontWeight="Bold" Foreground="$textColor" Margin="0,0,0,8"/>
+            <DockPanel LastChildFill="False">
+                <TextBox x:Name="txtChocolateyPath" Width="520" Margin="0,0,10,0"/>
+                <Button x:Name="btnBrowseChocolateyPath" Style="{StaticResource PrimaryButtonStyle}" Content="Browse..." Width="140"/>
+            </DockPanel>
+            <TextBlock Text="Path where Chocolatey is installed (e.g. C:\Apps\Chocolatey). Used for all package operations." FontSize="11" Foreground="$textSecondary" Margin="0,5,0,0" TextWrapping="Wrap"/>
         </StackPanel>
     </Border>
     

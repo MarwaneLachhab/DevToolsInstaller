@@ -20,6 +20,28 @@ function Get-VSCodeExtensions {
     )
 }
 
+function Get-InstalledVSCodeExtensions {
+    try {
+        $codeCmd = Get-Command code -ErrorAction SilentlyContinue
+        if (-not $codeCmd) {
+            return @()
+        }
+        $output = & code --list-extensions 2>$null
+        if ($output) {
+            return $output | ForEach-Object { $_.Trim().ToLowerInvariant() }
+        }
+        return @()
+    } catch {
+        return @()
+    }
+}
+
+function Test-VSCodeExtensionInstalled {
+    param([string]$ExtensionId)
+    $installed = Get-InstalledVSCodeExtensions
+    return ($installed -contains $ExtensionId.ToLowerInvariant())
+}
+
 function Install-VSCodeExtension {
     param([string]$ExtensionId)
     try {
@@ -29,16 +51,85 @@ function Install-VSCodeExtension {
             return $false
         }
         Write-Host "Installing extension: $ExtensionId" -ForegroundColor Cyan
-        $process = Start-Process "code" -ArgumentList "--install-extension $ExtensionId --force" -Wait -NoNewWindow -PassThru
+        
+        # Use System.Diagnostics.Process for reliable execution in background jobs
+        $psi = New-Object System.Diagnostics.ProcessStartInfo
+        $psi.FileName = $codeCmd.Source
+        $psi.Arguments = "--install-extension `"$ExtensionId`" --force"
+        $psi.UseShellExecute = $false
+        $psi.CreateNoWindow = $true
+        $psi.RedirectStandardOutput = $true
+        $psi.RedirectStandardError = $true
+        
+        $process = [System.Diagnostics.Process]::Start($psi)
+        $stdout = $process.StandardOutput.ReadToEnd()
+        $stderr = $process.StandardError.ReadToEnd()
+        $process.WaitForExit()
+        
+        if ($stdout) { Write-Host $stdout }
+        if ($stderr) { Write-Host $stderr -ForegroundColor Yellow }
+        
+        # VS Code returns 0 on success
         if ($process.ExitCode -eq 0) {
             Write-Host "Installed: $ExtensionId" -ForegroundColor Green
             return $true
         } else {
-            Write-Host "Failed: $ExtensionId" -ForegroundColor Red
+            Write-Host "Failed: $ExtensionId (Exit code: $($process.ExitCode))" -ForegroundColor Red
             return $false
         }
     } catch {
         Write-Host "Error installing ${ExtensionId}: $($_.Exception.Message)" -ForegroundColor Red
+        return $false
+    }
+}
+
+function Uninstall-VSCodeExtension {
+    param([string]$ExtensionId)
+    try {
+        $codeCmd = Get-Command code -ErrorAction SilentlyContinue
+        if (-not $codeCmd) {
+            Write-Host "VS Code CLI not found in PATH" -ForegroundColor Yellow
+            return $false
+        }
+        Write-Host "Uninstalling extension: $ExtensionId" -ForegroundColor Cyan
+        
+        # Use System.Diagnostics.Process for reliable execution in background jobs
+        $psi = New-Object System.Diagnostics.ProcessStartInfo
+        $psi.FileName = $codeCmd.Source
+        $psi.Arguments = "--uninstall-extension `"$ExtensionId`""
+        $psi.UseShellExecute = $false
+        $psi.CreateNoWindow = $true
+        $psi.RedirectStandardOutput = $true
+        $psi.RedirectStandardError = $true
+        
+        $process = [System.Diagnostics.Process]::Start($psi)
+        $stdout = $process.StandardOutput.ReadToEnd()
+        $stderr = $process.StandardError.ReadToEnd()
+        $process.WaitForExit()
+        
+        if ($stdout) { Write-Host $stdout }
+        if ($stderr -and $stderr -notmatch "FATAL ERROR") { Write-Host $stderr -ForegroundColor Yellow }
+        
+        # VS Code CLI sometimes crashes AFTER successful uninstall (V8 bug)
+        # Check if output says "successfully uninstalled" OR verify extension is no longer installed
+        $successInOutput = $stdout -match "successfully uninstalled"
+        
+        if ($process.ExitCode -eq 0 -or $successInOutput) {
+            Write-Host "Uninstalled: $ExtensionId" -ForegroundColor Green
+            return $true
+        } else {
+            # Double-check if extension was actually removed despite error
+            Start-Sleep -Milliseconds 500
+            $stillInstalled = Test-VSCodeExtensionInstalled -ExtensionId $ExtensionId
+            if (-not $stillInstalled) {
+                Write-Host "Uninstalled: $ExtensionId (with warnings)" -ForegroundColor Green
+                return $true
+            }
+            Write-Host "Failed to uninstall: $ExtensionId (Exit code: $($process.ExitCode))" -ForegroundColor Red
+            return $false
+        }
+    } catch {
+        Write-Host "Error uninstalling ${ExtensionId}: $($_.Exception.Message)" -ForegroundColor Red
         return $false
     }
 }
@@ -67,4 +158,26 @@ function Install-AllVSCodeExtensions {
     return @{ Successful = $installed; Failed = $failed }
 }
 
-Export-ModuleMember -Function Get-VSCodeExtensions, Install-VSCodeExtension, Install-AllVSCodeExtensions
+function Uninstall-AllVSCodeExtensions {
+    param([string[]]$ExtensionIds)
+    Write-Host "`n=== Uninstalling VS Code Extensions ===" -ForegroundColor Magenta
+    if (-not $ExtensionIds -or $ExtensionIds.Count -eq 0) {
+        Write-Host "No extensions specified for uninstall" -ForegroundColor Yellow
+        return @{ Successful = 0; Failed = 0 }
+    }
+    $uninstalled = 0
+    $failed = 0
+    foreach ($extId in $ExtensionIds) {
+        if (Uninstall-VSCodeExtension -ExtensionId $extId) {
+            $uninstalled++
+        } else {
+            $failed++
+        }
+    }
+    Write-Host "`nUninstall Complete!" -ForegroundColor Green
+    Write-Host "Uninstalled: $uninstalled" -ForegroundColor Green
+    Write-Host "Failed: $failed" -ForegroundColor $(if($failed -gt 0){"Red"}else{"Green"})
+    return @{ Successful = $uninstalled; Failed = $failed }
+}
+
+Export-ModuleMember -Function Get-VSCodeExtensions, Get-InstalledVSCodeExtensions, Test-VSCodeExtensionInstalled, Install-VSCodeExtension, Uninstall-VSCodeExtension, Install-AllVSCodeExtensions, Uninstall-AllVSCodeExtensions

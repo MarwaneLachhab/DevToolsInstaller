@@ -6,6 +6,9 @@ function Initialize-SettingsPage {
     $txtDownloadPath = $content.FindName("txtDownloadPath")
     if ($txtDownloadPath) { $txtDownloadPath.Text = $script:downloadPath }
     
+    $txtChocolateyPath = $content.FindName("txtChocolateyPath")
+    if ($txtChocolateyPath) { $txtChocolateyPath.Text = Get-ChocolateyPath }
+    
     $chkAutoHealth = $content.FindName("chkAutoHealth")
     if ($chkAutoHealth) { $chkAutoHealth.IsChecked = [bool](Get-UserSettingValue -Name "AutoRunHealthAfterInstall" -Default $true) }
     
@@ -34,7 +37,20 @@ function Initialize-SettingsPage {
             $dialog.ShowNewFolderButton = $true
             if ($dialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
                 $txtDownloadPath.Text = $dialog.SelectedPath
-                if ($statusText) { $statusText.Text = "Folder selection updated." }
+                if ($statusText) { $statusText.Text = "Download folder updated." }
+            }
+        }.GetNewClosure())
+    }
+    
+    $btnBrowseChoco = $content.FindName("btnBrowseChocolateyPath")
+    if ($btnBrowseChoco -and $txtChocolateyPath) {
+        $btnBrowseChoco.Add_Click({
+            $dialog = New-Object System.Windows.Forms.FolderBrowserDialog
+            $dialog.SelectedPath = $txtChocolateyPath.Text
+            $dialog.ShowNewFolderButton = $false
+            if ($dialog.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) {
+                $txtChocolateyPath.Text = $dialog.SelectedPath
+                if ($statusText) { $statusText.Text = "Chocolatey path updated." }
             }
         }.GetNewClosure())
     }
@@ -54,6 +70,13 @@ function Initialize-SettingsPage {
                 return
             }
             
+            $chocoPath = if ($txtChocolateyPath) { $txtChocolateyPath.Text.Trim() } else { "C:\Apps\Chocolatey" }
+            if ([string]::IsNullOrWhiteSpace($chocoPath)) {
+                [System.Windows.MessageBox]::Show("Chocolatey path cannot be empty.", "Validation",
+                    [System.Windows.MessageBoxButton]::OK, [System.Windows.MessageBoxImage]::Warning) | Out-Null
+                return
+            }
+            
             Ensure-UserSettingsProperties
             
             if (-not (Test-Path $path)) {
@@ -62,6 +85,7 @@ function Initialize-SettingsPage {
             
             $script:downloadPath = $path
             Set-UserSettingValue -Name "DownloadPath" -Value $path
+            Set-UserSettingValue -Name "ChocolateyPath" -Value $chocoPath
             if ($chkAutoHealth) { Set-UserSettingValue -Name "AutoRunHealthAfterInstall" -Value ([bool]$chkAutoHealth.IsChecked) }
             if ($chkAutoUpdates) { Set-UserSettingValue -Name "AutoCheckUpdates" -Value ([bool]$chkAutoUpdates.IsChecked) }
             
@@ -92,6 +116,7 @@ function Initialize-SettingsPage {
         $btnReset.Add_Click({
             $defaults = Get-DefaultUserSettings
             if ($txtDownloadPath) { $txtDownloadPath.Text = $defaults.DownloadPath }
+            if ($txtChocolateyPath) { $txtChocolateyPath.Text = $defaults.ChocolateyPath }
             if ($chkAutoHealth) { $chkAutoHealth.IsChecked = $defaults.AutoRunHealthAfterInstall }
             if ($chkAutoUpdates) { $chkAutoUpdates.IsChecked = $defaults.AutoCheckUpdates }
             if ($cmbTheme) {
@@ -163,6 +188,53 @@ function Apply-CachedVersions {
     if ($txtVSCode -and $script:versionInfo.VSCode) { $txtVSCode.Text = "VS Code - v$($script:versionInfo.VSCode.Version)" }
     if ($txtXAMPP -and $script:versionInfo.XAMPP) { $txtXAMPP.Text = "XAMPP - v$($script:versionInfo.XAMPP.Version)" }
 }
+
+# Initialize Extensions page - mark installed extensions
+function Initialize-ExtensionsPage {
+    $content = $controls.mainContent.Content
+    if (-not $content) { return }
+    
+    # Skip slow check if operation in progress
+    if ($script:isInstalling) {
+        $controls.txtStatus.Text = "Operation in progress..."
+        return
+    }
+    
+    $controls.txtStatus.Text = "Checking installed extensions..."
+    
+    # Get installed extensions (this runs code --list-extensions)
+    try {
+        $installedExtensions = Get-InstalledVSCodeExtensions
+    } catch {
+        $installedExtensions = @()
+    }
+    
+    $extensions = Get-VSCodeExtensions
+    
+    foreach ($ext in $extensions) {
+        $safeName = $ext.Id.Replace('.', '_').Replace('-', '_')
+        $statusText = $content.FindName("txtExtStatus_$safeName")
+        $checkbox = $content.FindName("chkExt_$safeName")
+        
+        $isInstalled = $installedExtensions -contains $ext.Id.ToLowerInvariant()
+        
+        if ($statusText) {
+            if ($isInstalled) {
+                $statusText.Text = "[Installed]"
+            } else {
+                $statusText.Text = ""
+            }
+        }
+        
+        # Pre-select installed extensions for potential uninstall
+        if ($checkbox -and $isInstalled) {
+            $checkbox.ToolTip = "Installed - select to uninstall"
+        }
+    }
+    
+    $controls.txtStatus.Text = "Ready"
+}
+
 function Load-Page {
     param([string]$PageName)
     
@@ -234,6 +306,9 @@ function Load-Page {
             
             # Set up action bar
             Set-ActionBar "Extensions"
+            
+            # Mark installed extensions
+            Initialize-ExtensionsPage
         }
         "Health" {
             $controls.btnNavHealth.Background = $window.Resources["SidebarActiveColor"]
@@ -250,6 +325,12 @@ function Load-Page {
             
             $exportButton = $content.FindName("btnExportHealthReport")
             if ($exportButton) { $exportButton.Add_Click({ Export-HealthReport }) }
+            
+            $fixAllButton = $content.FindName("btnFixAllIssues")
+            if ($fixAllButton) { $fixAllButton.Add_Click({ Fix-AllHealthIssues }) }
+            
+            $fixSelectedButton = $content.FindName("btnFixSelected")
+            if ($fixSelectedButton) { $fixSelectedButton.Add_Click({ Fix-SelectedHealthIssues }) }
             
             if ($script:lastHealthResults -and $script:lastHealthResults.Count -gt 0) {
                 Render-HealthResults -Results $script:lastHealthResults
@@ -270,8 +351,14 @@ function Load-Page {
             $btnCheck = $content.FindName("btnCheckUpdates")
             if ($btnCheck) { $btnCheck.Add_Click({ Invoke-UpdateCheck }) }
             
+            $btnSelectAll = $content.FindName("btnSelectAllUpdates")
+            if ($btnSelectAll) { $btnSelectAll.Add_Click({ Select-AllUpdates }) }
+            
             $btnUpdate = $content.FindName("btnUpdateSelected")
             if ($btnUpdate) { $btnUpdate.Add_Click({ Install-SelectedUpdates }) }
+            
+            $btnUpdateAll = $content.FindName("btnUpdateAll")
+            if ($btnUpdateAll) { $btnUpdateAll.Add_Click({ Install-AllUpdates }) }
             
             $btnExport = $content.FindName("btnExportUpdateReport")
             if ($btnExport) { $btnExport.Add_Click({ Export-UpdateReport }) }
